@@ -1,8 +1,6 @@
 swagger: '2.0'
 info:
-  description: "DocS_ > Documentação APIS\r\n\r\n"
   version: 1.0.0
-  title: Documentação de APIs Smarkets
 host: api-hom.smarkets.com.br
 basePath: /api
 tags:
