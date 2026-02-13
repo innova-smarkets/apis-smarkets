@@ -41,7 +41,7 @@ paths:
           examples: {}
           schema:
             $ref: '#/definitions/Pedido'
-  /pedidos-integracao/:
+  /pedidos-integracao:
     put:
       tags:
         - Pedidos
