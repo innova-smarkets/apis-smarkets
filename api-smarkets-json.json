@@ -1,2412 +1,2072 @@
-{
-  "swagger": "2.0",
-  "info": {
-    "description": "DocS_ > Documentação APIS\r\n\r\n",
-    "version": "1.0.0",
-    "title": "Documentação de APIs Smarkets"
-  },
-  "host": "api-hom.smarkets.com.br",
-  "basePath": "/api",
-  "tags": [
-    {
-      "name": "Pedidos",
-      "description": "APIs de pedidos"
-    },
-    {
-      "name": "Cotação",
-      "description": "APIs de Cotação"
-    },
-    {
-      "name": "Autenticação",
-      "description": "API de autenticação"
-    },
-    {
-      "name": "Produto",
-      "description": "APIs de produto"
-    },
-    {
-      "name": "Solicitação de compra",
-      "description": "API de solicitação de compra"
-    }
-  ],
-  "schemes": [
-    "https"
-  ],
-  "security": [
-    {
-      "Bearer": []
-    }
-  ],
-  "paths": {
-    "/pedidos-integracao/{idPedido}": {
-      "get": {
-        "tags": [
-          "Pedidos"
-        ],
-        "summary": "Permite consultar dados de um pedido através do código do Pedido do Marketplace.",
-        "description": "api-pedidos-integracao",
-        "operationId": "",
-        "parameters": [
-          {
-            "name": "idPedido",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "examples": {},
-            "schema": {
-              "$ref": "#/definitions/inline_response_200"
-            }
-          }
-        }
-      }
-    },
-    "/pedidos-integracao/": {
-      "put": {
-        "tags": [
-          "Pedidos"
-        ],
-        "summary": "Permite alterar alguns dados de pedido no Marketplace que não estejam com situação faturado, enviado ou recebido.",
-        "operationId": "put-api-pedidos-integracao",
-        "parameters": [
-          {
-            "x-examples": {
-              "Exemplo de request": {
-                "IdPedido": 22885,
-                "Status": "Aguardando aprovação interna",
-                "Itens": [
-                  {
-                    "IdPedido": 22885,
-                    "IdPedidoItem": 40424,
-                    "Quantidade": 10.5,
-                    "PrecoBruto": 100,
-                    "PrecoLiquido": 90,
-                    "PrecoUnidade": 9
-                  }
-                ]
-              }
-            },
-            "in": "body",
-            "name": "body",
-            "description": "",
-            "required": false,
-            "schema": {
-              "$ref": "#/definitions/body"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/inline_response_200_1"
-            }
-          }
-        }
-      }
-    },
-    "/pedidos-integracao/pendentesintegracao": {
-      "get": {
-        "tags": [
-          "Pedidos"
-        ],
-        "summary": "Permite consultar lista de pedidos na situação pendente de integração e aguardando aprovação interna do Marketplace.",
-        "operationId": "get-api-pedidos-integracao-pendentesintegracao?idTenant=-idTenant",
-        "parameters": [
-          {
-            "name": "idTenant",
-            "in": "query",
-            "description": "Identificado do tenant da empresa",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/inline_response_200_2"
-            }
-          }
-        }
-      }
-    },
-    "/pedidos-integracao/cancelados/finalizados": {
-      "put": {
-        "tags": [
-          "Pedidos"
-        ],
-        "summary": "Permite cancelar pedidos no Marketplace",
-        "operationId": "put-api-pedidos-integracao-cancelados-finalizados",
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "required": false,
-            "schema": {
-              "$ref": "#/definitions/body_1"
-            }
-          }
-        ],
-        "security": [],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/inline_response_200_3"
-            }
-          }
-        }
-      }
-    },
-    "/autenticacoes-integracao": {
-      "post": {
-        "tags": [
-          "Autenticação"
-        ],
-        "summary": "Permite obter o token de acesso",
-        "operationId": "post-api-autenticacoes-integracao",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/body_2"
-            }
-          }
-        ],
-        "security": [],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/inline_response_200_4"
-            }
-          }
-        }
-      }
-    },
-    "/1.0/produtos-integracao": {
-      "get": {
-        "tags": [
-          "Produto"
-        ],
-        "summary": "Permite consultar dados de todos os produtos cadastrados no tenant do Marketplace de forma paginada.",
-        "operationId": "get-1.0-produtos-integracao",
-        "parameters": [
-          {
-            "name": "pagina",
-            "in": "query",
-            "description": "Quantidade de páginas",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "itensPorPagina",
-            "in": "query",
-            "description": "Quantidade de itens por página",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "itemOrdenar",
-            "in": "query",
-            "description": "Tipo de ordenação por Item (EX. IdProduto)",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "Ordenação",
-            "in": "query",
-            "description": "Tipo de ordenação (EX: ASC, DESC)",
-            "required": false,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "examples": {
-              "Example 1": {
-                "numeroPaginas": 5634,
-                "itens": [
-                  {
-                    "idProduto": 172534,
-                    "idCategoriaProduto": 285,
-                    "categoria": {
-                      "idCategoriaProduto": 285,
-                      "codigo": "",
-                      "nome": "EPI - EQUIPAMENTOS DE PROTEÇÃO INDIVIDUAL",
-                      "ativa": true,
-                      "regulamentacao": false,
-                      "classificacao": 1
-                    },
-                    "idUnidadeMedida": 1635,
-                    "unidadeMedida": {
-                      "idUnidadeMedida": 1635,
-                      "codigo": "21",
-                      "descricao": "PEÇA",
-                      "sigla": "PÇ",
-                      "permiteQuantidadeFracionada": false
-                    },
-                    "situacao": "Ativo",
-                    "tipo": "Produto",
-                    "codigo": "10653",
-                    "codigoNcm": "12345678",
-                    "descricao": "Blusão Vaqueta CZ Velcro Tam G Procipa CA 30561",
-                    "descricaoDetalhada": "**.",
-                    "moeda": "BRL",
-                    "idSolicitante": 20628,
-                    "marcas": [
-                      {
-                        "idMarca": 3282,
-                        "codigo": "",
-                        "nome": "PARAIBUNA           "
-                      }
-                    ],
-                    "contasContabeis": [],
-                    "codigoUnico": 950027943
-                  },
-                  {
-                    "idProduto": 172533,
-                    "idCategoriaProduto": 285,
-                    "categoria": {
-                      "idCategoriaProduto": 285,
-                      "codigo": "",
-                      "nome": "EPI - EQUIPAMENTOS DE PROTEÇÃO INDIVIDUAL",
-                      "ativa": true,
-                      "regulamentacao": false,
-                      "classificacao": 1
-                    },
-                    "idUnidadeMedida": 1635,
-                    "unidadeMedida": {
-                      "idUnidadeMedida": 1635,
-                      "codigo": "21",
-                      "descricao": "PEÇA",
-                      "sigla": "PÇ",
-                      "permiteQuantidadeFracionada": false
-                    },
-                    "situacao": "Ativo",
-                    "tipo": "Produto",
-                    "descricao": "Blusão Trev Amarelo com Capuz e Forro Tamanho M Brascamp CA 28438",
-                    "descricaoDetalhada": "**BLUSÃO TREV AM C/CAPUZ C/FORRO C/BOT TAM .",
-                    "moeda": "BRL",
-                    "idSolicitante": 20628,
-                    "marcas": [],
-                    "contasContabeis": [],
-                    "codigoUnico": 950027942
-                  },
-                  {
-                    "idProduto": 172532,
-                    "idCategoriaProduto": 285,
-                    "categoria": {
-                      "idCategoriaProduto": 285,
-                      "codigo": "",
-                      "nome": "EPI - EQUIPAMENTOS DE PROTEÇÃO INDIVIDUAL",
-                      "ativa": true,
-                      "regulamentacao": false,
-                      "classificacao": 1
-                    },
-                    "idUnidadeMedida": 1635,
-                    "unidadeMedida": {
-                      "idUnidadeMedida": 1635,
-                      "codigo": "21",
-                      "descricao": "PEÇA",
-                      "sigla": "PÇ",
-                      "permiteQuantidadeFracionada": false
-                    },
-                    "situacao": "Ativo",
-                    "tipo": "Produto",
-                    "descricao": "Blusão Trev Amarelo com Capuz e Forro GG Brascamp",
-                    "descricaoDetalhada": "**BLUSÃO TREV AM C/CAPUZ C/FORRO C/BOT TAM GG S/LOGOTIPO 127 BRASCAMP CA 28438**\n\n**Descrição Geral:**\n\nBlusão de segurança de alta visibilidade...",
-                    "moeda": "BRL",
-                    "idSolicitante": 20628,
-                    "marcas": [],
-                    "contasContabeis": [],
-                    "codigoUnico": 950027941
-                  },
-                  {
-                    "idProduto": 172531,
-                    "idCategoriaProduto": 285,
-                    "categoria": {
-                      "idCategoriaProduto": 285,
-                      "codigo": "",
-                      "nome": "EPI - EQUIPAMENTOS DE PROTEÇÃO INDIVIDUAL",
-                      "ativa": true,
-                      "regulamentacao": false,
-                      "classificacao": 1
-                    },
-                    "idUnidadeMedida": 1635,
-                    "unidadeMedida": {
-                      "idUnidadeMedida": 1635,
-                      "codigo": "21",
-                      "descricao": "PEÇA",
-                      "sigla": "PÇ",
-                      "permiteQuantidadeFracionada": false
-                    },
-                    "situacao": "Ativo",
-                    "tipo": "Produto",
-                    "descricao": "Blusão Trev Amarelo com Capuz e Forro Tamanho G sem Logotipo Brascamp",
-                    "descricaoDetalhada": "**BLUSÃO TREV AM C/CAPUZ C/FORRO C/BOT TAM G S/LOGOTIPO 126 BRASCAMP CA 28438**",
-                    "moeda": "BRL",
-                    "idSolicitante": 20628,
-                    "marcas": [],
-                    "contasContabeis": [],
-                    "codigoUnico": 950027940
-                  },
-                  {
-                    "idProduto": 172530,
-                    "idCategoriaProduto": 285,
-                    "categoria": {
-                      "idCategoriaProduto": 285,
-                      "codigo": "",
-                      "nome": "EPI - EQUIPAMENTOS DE PROTEÇÃO INDIVIDUAL",
-                      "ativa": true,
-                      "regulamentacao": false,
-                      "classificacao": 1
-                    },
-                    "idUnidadeMedida": 1635,
-                    "unidadeMedida": {
-                      "idUnidadeMedida": 1635,
-                      "codigo": "21",
-                      "descricao": "PEÇA",
-                      "sigla": "PÇ",
-                      "permiteQuantidadeFracionada": false
-                    },
-                    "situacao": "Ativo",
-                    "tipo": "Produto",
-                    "descricao": "Blusão Raspa Nat Velcro Tam G BVR5602 Procipa CA 36980",
-                    "descricaoDetalhada": "**BLUSÃO DE RASPA NATURAL COM VELCRO TAMANHO G BVR5602 PROCIPA CA 36980**",
-                    "moeda": "BRL",
-                    "idSolicitante": 20628,
-                    "marcas": [],
-                    "contasContabeis": [],
-                    "codigoUnico": 950027939
-                  }
-                ],
-                "total": 28169
-              }
-            },
-            "schema": {
-              "$ref": "#/definitions/inline_response_200_5"
-            }
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "Produto"
-        ],
-        "summary": "Permite criar produtos no Marketplace.",
-        "operationId": "post-1.0-produtos-integracao",
-        "parameters": [
-          {
-            "name": "IdTenant",
-            "in": "header",
-            "description": "Identificado do tenant da empresa",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "in": "body",
-            "name": "body",
-            "required": false,
-            "schema": {
-              "$ref": "#/definitions/body_4"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/inline_response_200_7"
-            }
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "Produto"
-        ],
-        "summary": "Permite alterar dados do produto cadastrado no Marketplace",
-        "operationId": "put-1.0-produtos-integracao",
-        "parameters": [
-          {
-            "name": "idTenant",
-            "in": "query",
-            "description": "Identificado do tenant da empresa",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "in": "body",
-            "name": "body",
-            "description": "",
-            "required": false,
-            "schema": {
-              "$ref": "#/definitions/body_3"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/inline_response_200_6"
-            }
-          }
-        }
-      }
-    },
-    "/1.0/produtos-integracao/{idProduto}": {
-      "get": {
-        "tags": [
-          "Produto"
-        ],
-        "summary": "Permite consultar dados de um produto cadastrado no tenant do Marketplace através código de um produto.",
-        "operationId": "get-api-1.0-produtos-integracao-idProduto",
-        "parameters": [
-          {
-            "name": "idProduto",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "examples": {
-              "Exemplo Retorno": {
-                "idProduto": 172534,
-                "idCategoriaProduto": 285,
-                "categoria": {
-                  "idCategoriaProduto": 285,
-                  "codigo": "",
-                  "nome": "EPI - EQUIPAMENTOS DE PROTEÇÃO INDIVIDUAL",
-                  "ativa": true,
-                  "regulamentacao": false,
-                  "classificacao": 1
-                },
-                "idUnidadeMedida": 1635,
-                "unidadeMedida": {
-                  "idUnidadeMedida": 1635,
-                  "codigo": "21",
-                  "descricao": "PEÇA",
-                  "sigla": "PÇ",
-                  "permiteQuantidadeFracionada": false
-                },
-                "situacao": "Ativo",
-                "tipo": "Produto",
-                "codigo": "10653",
-                "codigoNcm": "12345678",
-                "descricao": "Blusão Vaqueta CZ Velcro Tam G Procipa CA 30561",
-                "descricaoDetalhada": "**BLUSÃO DE VAQUETA CZ VELCRO TAM G 43 BV5601 PROCIPA CA 30561**\n\n**Descrição Geral:**\n\nO blusão de vaqueta CZ Velcro da Procipa, tamanho G (43), modelo BV5601, com Certificado de Aprovação (CA) número 30561, é um Equipamento de Proteção Individual (EPI) projetado para proteger o tronco do usuário contra agentes abrasivos, escoriantes, cortantes e perfurantes. Fabricado em couro vaqueta de alta qualidade, oferece durabilidade e resistência em ambientes de trabalho exigentes.\n\n**Características Técnicas:**\n\n*   **Material:** Couro vaqueta curtido ao cromo, selecionado para garantir resistência e flexibilidade.\n*   **Tamanho:** G (43).\n*   **Fechamento:** Frontal com zíper e velcro, proporcionando ajuste seguro e facilidade ao vestir e despir.\n*   **Costura:** Reforçada com linha de alta tenacidade, aumentando a vida útil do blusão.\n*   **Acabamento:** Bordas com acabamento para evitar desfiados e aumentar o conforto.\n*   **Design:** Anatômico, permitindo maior liberdade de movimento.\n*   **Cor:** Cor padrão do couro vaqueta (variações de tonalidade são inerentes ao material).\n\n**Proteção:**\n\n*   Proteção do tronco contra agentes abrasivos, escoriantes, cortantes e perfurantes.\n*   Resistência ao calor de contato (pequenas chamas, calor radiante e respingos de solda, em algumas aplicações específicas, dependendo da espessura e tratamento do couro).\n\n**Aplicabilidade:**\n\n*   Indústria metalúrgica.\n*   Indústria automobilística.\n*   Construção civil.\n*   Soldagem (proteção contra respingos).\n*   Manutenção industrial.\n*   Atividades que envolvam riscos de abrasão, cortes e perfurações no tronco.\n*   Trabalhos com esmerilhadeira, lixadeira e outras ferramentas abrasivas.\n\n**Contraindicações/Restrições:**\n\n*   Não utilizar em ambientes com exposição a agentes químicos agressivos, como ácidos fortes e solventes, que podem danificar o couro.\n*   Não utilizar em situações que envolvam risco de choque elétrico.\n*   Não utilizar em ambientes com temperaturas extremas, que podem comprometer a integridade do couro.\n*   Não recomendado para proteção contra riscos térmicos elevados (fogo intenso ou calor extremo).\n*   Verificar a integridade do blusão antes de cada uso. Em caso de danos, substituir imediatamente.\n*   O blusão deve ser utilizado no tamanho adequado para garantir a proteção e o conforto do usuário.\n\n**Certificações:**\n\n*   Certificado de Aprovação (CA) número 30561, emitido pelo Ministério do Trabalho e Emprego (MTE), atestando a conformidade do produto com as normas de segurança aplicáveis.",
-                "moeda": "BRL",
-                "idSolicitante": 20628,
-                "marcas": [
-                  {
-                    "idMarca": 3282,
-                    "codigo": "",
-                    "nome": "PARAIBUNA           "
-                  }
-                ],
-                "contasContabeis": [],
-                "codigoUnico": 950027943
-              }
-            },
-            "schema": {
-              "$ref": "#/definitions/inline_response_200_8"
-            }
-          }
-        }
-      }
-    },
-    "/1.0/solicitacoescompras-integracao": {
-      "post": {
-        "tags": [
-          "Solicitação de compra"
-        ],
-        "summary": "Permite criar solicitação de compras no Marketplace",
-        "operationId": "post-1.0-solicitacoescompras-integracao",
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "required": false,
-            "schema": {
-              "$ref": "#/definitions/body_5"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/inline_response_200_9"
-            }
-          }
-        }
-      }
-    },
-    "/pedidos-integracao/pendentes-cancelamento": {
-      "get": {
-        "tags": [
-          "Pedidos"
-        ],
-        "summary": "Permite consultar lista de pedidos na situação pendente de cancelamento no Marketplace.",
-        "operationId": "get-pedidos-integracao-pendentes-cancelamento",
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "required": false,
-            "schema": {
-              "$ref": "#/definitions/body_6"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/inline_response_200_10"
-            }
-          }
-        }
-      }
-    },
-    "/cotacoes-integracao/{idCotacao}/pdf": {
-      "get": {
-        "tags": [
-          "Cotação"
-        ],
-        "summary": "Permitir obter o mapa comparativo da cotação",
-        "operationId": "get-cotacoes-integracao-idCotacao-pdf",
-        "parameters": [
-          {
-            "name": "idCotacao",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    }
-  },
-  "securityDefinitions": {
-    "Bearer": {
-      "type": "apiKey",
-      "name": "Authorization",
-      "in": "header"
-    }
-  },
-  "definitions": {
-    "Moeda": {
-      "type": "string",
-      "description": "",
-      "enum": [
-        "Real = 1",
-        "DolarAmericano = 2",
-        "Libra = 3",
-        "Euro = 4",
-        "IeneJapones = 5",
-        "FrancoSuico = 6",
-        "DolarAustraliano = 7",
-        "DolarCanadense = 8",
-        "IuaneChines = 9",
-        "PesoArgentino = 10"
-      ]
-    },
-    "TipoProduto": {
-      "type": "string",
-      "description": "",
-      "enum": [
-        "Produto = 1",
-        "Servico = 2"
-      ]
-    },
-    "inline_response_200_itens": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "integer",
-          "description": "Identificador único do item do pedido"
-        },
-        "codigoProduto": {
-          "type": "string",
-          "description": "Código do produto"
-        },
-        "nomeProduto": {
-          "type": "string",
-          "description": "Nome ou descrição resumida do produto"
-        },
-        "quantidade": {
-          "type": "integer",
-          "description": "Quantidade solicitada do produto"
-        },
-        "precoBruto": {
-          "type": "integer",
-          "description": "Valor bruto do item antes de descontos"
-        },
-        "precoLiquido": {
-          "type": "integer",
-          "description": "Valor líquido do item após aplicação de descontos"
-        },
-        "precoUnidade": {
-          "type": "integer",
-          "description": "Preço unitário do produto"
-        },
-        "codigoCategoria": {
-          "type": "string",
-          "description": "Código da categoria do produto"
-        },
-        "codigoNcm": {
-          "type": "string",
-          "description": "Código NCM do produto"
-        },
-        "codigoRc": {
-          "type": "string",
-          "description": "Código da requisição de compra associada ao item"
-        },
-        "codigoUnidadeMedida": {
-          "type": "string",
-          "description": "Código da unidade de medida do produto"
-        },
-        "idProdutoIntegracao": {
-          "type": "string",
-          "description": "Identificador do produto no sistema de integração"
-        },
-        "centroCustoIntegracao": {
-          "type": "string",
-          "description": "Centro de custo associado ao item"
-        },
-        "descricaoSolicitacaoCompra": {
-          "type": "string",
-          "description": "Descrição informada na solicitação de compra"
-        },
-        "descricaoDetalhadaProduto": {
-          "type": "string",
-          "description": "Descrição detalhada do produto"
-        },
-        "prazoEntrega": {
-          "type": "integer",
-          "description": "Prazo de entrega do item em dias"
-        },
-        "codigoCompradorItemRc": {
-          "type": "string",
-          "description": "Código do comprador associado ao item da requisição"
-        },
-        "tipoContratoCatalogo": {
-          "type": "integer",
-          "description": "Tipo de contrato ou catálogo aplicado ao item"
-        }
-      },
-      "description": "Objeto que representa um item do pedido"
-    },
-    "inline_response_200": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "integer",
-          "description": "Identificador único do pedido"
-        },
-        "dataPedidoDisponivel": {
-          "type": "string",
-          "description": "Data em que o pedido ficou disponível para processamento"
-        },
-        "dataIntegracao": {
-          "type": "string",
-          "description": "Data em que o pedido foi integrado ao sistema"
-        },
-        "codigoCondicaoPagamento": {
-          "type": "string",
-          "description": "Código da condição de pagamento aplicada ao pedido"
-        },
-        "incoterms": {
-          "type": "string",
-          "description": "Incoterms utilizado na negociação do pedido"
-        },
-        "textoCabecalho": {
-          "type": "string",
-          "description": "Texto informativo exibido no cabeçalho do pedido"
-        },
-        "idFornecedorIntegracao": {
-          "type": "string",
-          "description": "Identificador do fornecedor no sistema de integração"
-        },
-        "cnpjFornecedor": {
-          "type": "string",
-          "description": "CNPJ do fornecedor"
-        },
-        "cnpjComprador": {
-          "type": "string",
-          "description": "CNPJ da empresa compradora"
-        },
-        "nomeUsuarioComprador": {
-          "type": "string",
-          "description": "Nome do usuário responsável pela compra"
-        },
-        "itens": {
-          "type": "array",
-          "description": "Lista de itens que compõem o pedido",
-          "items": {
-            "$ref": "#/definitions/inline_response_200_itens"
-          }
-        }
-      },
-      "x-examples": {
-        "Example 1": {
-          "id": 22887,
-          "dataPedidoDisponivel": "2026-02-11T09:48:41",
-          "dataIntegracao": "2026-02-11T09:48:41",
-          "codigoCondicaoPagamento": "30DDL",
-          "incoterms": "Cif",
-          "textoCabecalho": "Pedido Plataforma Smarkets",
-          "idFornecedorIntegracao": "4041",
-          "cnpjFornecedor": "67.994.897/0001-97",
-          "cnpjComprador": "21.003.099/0001-55",
-          "nomeUsuarioComprador": "André Gotler | Smarkets",
-          "itens": [
-            {
-              "id": 40426,
-              "codigoProduto": "900000636",
-              "nomeProduto": "Mouse Wireless WM126 Preto - Dell (129621684)",
-              "quantidade": 1,
-              "precoBruto": 10,
-              "precoLiquido": 10,
-              "precoUnidade": 10,
-              "codigoCategoria": "PERIFÉRICOS ",
-              "codigoNcm": "84716053",
-              "codigoRc": "60810001",
-              "codigoUnidadeMedida": "",
-              "idProdutoIntegracao": "",
-              "centroCustoIntegracao": "",
-              "descricaoSolicitacaoCompra": "",
-              "descricaoDetalhadaProduto": "",
-              "prazoEntrega": 100,
-              "codigoCompradorItemRc": "12345",
-              "tipoContratoCatalogo": 2
-            }
-          ]
-        }
-      }
-    },
-    "pedidosintegracao_Itens": {
-      "type": "object",
-      "required": [
-        "IdPedidoItem"
-      ],
-      "properties": {
-        "IdPedido": {
-          "type": "integer",
-          "description": "Código do pedido no Marketplace\r\n"
-        },
-        "IdPedidoItem": {
-          "type": "integer",
-          "description": "Código do item no pedido"
-        },
-        "Quantidade": {
-          "type": "number",
-          "description": "Quantidade do item"
-        },
-        "PrecoBruto": {
-          "type": "integer",
-          "description": "Preço bruto do item"
-        },
-        "PrecoLiquido": {
-          "type": "integer",
-          "description": "Preço líquido do item"
-        },
-        "PrecoUnidade": {
-          "type": "integer",
-          "description": "Preço unitário do item"
-        }
-      }
-    },
-    "body": {
-      "type": "object",
-      "required": [
-        "IdPedido",
-        "Status"
-      ],
-      "properties": {
-        "IdPedido": {
-          "type": "integer",
-          "description": "Código do pedido no Marketplace"
-        },
-        "Status": {
-          "type": "string",
-          "description": "Situação atual do pedido no Marketplace (ex. Aguardando aprovação interna)"
-        },
-        "Itens": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/pedidosintegracao_Itens"
-          }
-        }
-      },
-      "x-examples": {
-        "Example 1": {
-          "IdPedido": 22885,
-          "Status": "Aguardando aprovação interna",
-          "Itens": [
-            {
-              "IdPedido": 22885,
-              "IdPedidoItem": 40424,
-              "Quantidade": 10.5,
-              "PrecoBruto": 100,
-              "PrecoLiquido": 90,
-              "PrecoUnidade": 9
-            }
-          ]
-        }
-      }
-    },
-    "inline_response_200_1": {
-      "type": "object",
-      "properties": {
-        "IdPedido": {
-          "type": "string"
-        },
-        "mensagem": {
-          "type": "string"
-        },
-        "statusCode": {
-          "type": "string"
-        }
-      },
-      "x-examples": {
-        "Example 1": {
-          "IdPedido": "22885",
-          "mensagem": "\"Sucesso\"",
-          "statusCode": "200"
-        }
-      }
-    },
-    "inline_response_200_2_itens": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "integer",
-          "description": "Identificador único do item do pedido"
-        },
-        "codigo": {
-          "type": "string",
-          "description": "Código identificador do item"
-        },
-        "codigoProduto": {
-          "type": "string",
-          "description": "Código do produto"
-        },
-        "nomeProduto": {
-          "type": "string",
-          "description": "Nome do produto"
-        },
-        "quantidade": {
-          "type": "integer",
-          "description": "Quantidade solicitada do produto"
-        },
-        "dataRemessa": {
-          "type": "string",
-          "description": "Data prevista para remessa do item"
-        },
-        "precoBruto": {
-          "type": "integer",
-          "description": "Valor bruto do item"
-        },
-        "precoLiquido": {
-          "type": "integer",
-          "description": "Valor líquido do item após descontos"
-        },
-        "precoUnidade": {
-          "type": "integer",
-          "description": "Preço unitário do produto"
-        },
-        "codigoCategoria": {
-          "type": "string",
-          "description": "Código da categoria do produto"
-        },
-        "codigoNcm": {
-          "type": "string",
-          "description": "Código NCM do produto"
-        },
-        "codigoRc": {
-          "type": "string",
-          "description": "Código da requisição de compra"
-        },
-        "codigoIva": {
-          "type": "string",
-          "description": "Código de IVA aplicado ao item"
-        },
-        "codigoUnidadeMedida": {
-          "type": "string",
-          "description": "Código da unidade de medida do produto"
-        },
-        "idProdutoIntegracao": {
-          "type": "string",
-          "description": "Identificador do produto no sistema de integração"
-        },
-        "centroCustoIntegracao": {
-          "type": "string",
-          "description": "Centro de custo associado ao item"
-        },
-        "descricaoSolicitacaoCompra": {
-          "type": "string",
-          "description": "Descrição da solicitação de compra"
-        },
-        "descricaoDetalhadaProduto": {
-          "type": "string",
-          "description": "Descrição detalhada do produto"
-        },
-        "codigoCompradorItemRc": {
-          "type": "string",
-          "description": "Código do comprador vinculado ao item da requisição"
-        }
-      }
-    },
-    "inline_response_200_2_result": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "integer",
-          "description": "Identificador único do pedido"
-        },
-        "dataIntegracao": {
-          "type": "string",
-          "description": "Data em que o pedido foi integrado ao sistema"
-        },
-        "tipoPedido": {
-          "type": "string",
-          "description": "Tipo do pedido realizado"
-        },
-        "codigoGrupoComprador": {
-          "type": "string",
-          "description": "Código do grupo comprador"
-        },
-        "codigoOrganizacaoCompras": {
-          "type": "string",
-          "description": "Código da organização de compras"
-        },
-        "codigoCondicaoPagamento": {
-          "type": "string",
-          "description": "Código da condição de pagamento utilizada"
-        },
-        "incoterms": {
-          "type": "string",
-          "description": "Incoterms aplicável ao pedido"
-        },
-        "textoCabecalho": {
-          "type": "string",
-          "description": "Texto descritivo do cabeçalho do pedido"
-        },
-        "idFornecedorIntegracao": {
-          "type": "string",
-          "description": "Identificador do fornecedor no sistema de integração"
-        },
-        "cnpjFornecedor": {
-          "type": "string",
-          "description": "CNPJ do fornecedor"
-        },
-        "cnpjComprador": {
-          "type": "string",
-          "description": "CNPJ do comprador"
-        },
-        "nomeUsuarioComprador": {
-          "type": "string",
-          "description": "Nome do usuário responsável pela comprador"
-        },
-        "itens": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/inline_response_200_2_itens"
-          }
-        }
-      }
-    },
-    "inline_response_200_2": {
-      "type": "object",
-      "properties": {
-        "result": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/inline_response_200_2_result"
-          }
-        }
-      },
-      "x-examples": {
-        "Example 1": {
-          "result": [
-            {
-              "id": 38,
-              "dataPedidoDisponivel": "2026-01-20T14:12:12",
-              "dataIntegracao": "2026-01-20T14:12:12",
-              "tipoPedido": "123",
-              "codigoGrupoComprador": "GRP",
-              "codigoOrganizacaoCompras": "ORG",
-              "codigoCondicaoPagamento": "45DDL",
-              "incoterms": "Cif",
-              "textoCabecalho": "Pedido Plataforma Smarkets",
-              "idFornecedorIntegracao": "3333",
-              "cnpjFornecedor": "65.112.314/0001-21",
-              "cnpjComprador": "21.003.099/0001-55",
-              "nomeUsuarioComprador": "Rafael Gino",
-              "itens": [
-                {
-                  "id": 97,
-                  "codigo": "",
-                  "codigoProduto": "SUPSAP",
-                  "nomeProduto": "Suporte SAP",
-                  "quantidade": 1,
-                  "dataRemessa": "2019-12-01T00:00:00",
-                  "precoBruto": 123,
-                  "precoLiquido": 123,
-                  "precoUnidade": 123,
-                  "codigoCategoria": "SUP",
-                  "codigoNcm": "90189099",
-                  "codigoRc": "T10",
-                  "codigoIva": "IVA",
-                  "codigoUnidadeMedida": "316",
-                  "idProdutoIntegracao": "SUPSAP",
-                  "centroCustoIntegracao": "5678",
-                  "descricaoSolicitacaoCompra": "TESTE",
-                  "descricaoDetalhadaProduto": "",
-                  "codigoCompradorItemRc": "MEC"
-                }
-              ]
-            },
-            {
-              "id": 219,
-              "dataPedidoDisponivel": "2026-01-20T14:12:12",
-              "dataIntegracao": "2026-01-20T14:12:12",
-              "tipoPedido": "123",
-              "codigoGrupoComprador": "GRP",
-              "codigoOrganizacaoCompras": "ORG",
-              "codigoCondicaoPagamento": "45DDL",
-              "incoterms": "Cif",
-              "textoCabecalho": "Pedido Plataforma Smarkets",
-              "idFornecedorIntegracao": "",
-              "cnpjFornecedor": "08.156.392/0001-94",
-              "cnpjComprador": "21.003.099/0001-55",
-              "nomeUsuarioComprador": "Henrique Soares de Santana",
-              "itens": [
-                {
-                  "id": 875,
-                  "codigo": "",
-                  "codigoProduto": "TLK120",
-                  "nomeProduto": "Teclado Logitech K120, ABNT2",
-                  "quantidade": 1,
-                  "dataRemessa": "2020-01-30T00:00:00",
-                  "precoBruto": 25,
-                  "precoLiquido": 25,
-                  "precoUnidade": 25,
-                  "codigoCategoria": "PER",
-                  "codigoNcm": "8467.91.00",
-                  "codigoIva": "IVA",
-                  "codigoUnidadeMedida": "316",
-                  "idProdutoIntegracao": "TLK120",
-                  "centroCustoIntegracao": "5678",
-                  "descricaoSolicitacaoCompra": "",
-                  "descricaoDetalhadaProduto": "Teclado Logitech K120, ABNT2"
-                }
-              ]
-            },
-            {
-              "id": 219,
-              "dataPedidoDisponivel": "2026-01-20T14:12:12",
-              "dataIntegracao": "2026-01-20T14:12:12",
-              "tipoPedido": "123",
-              "codigoGrupoComprador": "GRP",
-              "codigoOrganizacaoCompras": "ORG",
-              "codigoCondicaoPagamento": "45DDL",
-              "incoterms": "Cif",
-              "textoCabecalho": "Pedido Plataforma Smarkets",
-              "idFornecedorIntegracao": "",
-              "cnpjFornecedor": "08.156.392/0001-94",
-              "cnpjComprador": "21.003.099/0001-55",
-              "nomeUsuarioComprador": "Henrique Soares de Santana",
-              "itens": [
-                {
-                  "id": 875,
-                  "codigo": "",
-                  "codigoProduto": "TLK120",
-                  "nomeProduto": "Teclado Logitech K120, ABNT2",
-                  "quantidade": 1,
-                  "dataRemessa": "2020-01-30T00:00:00",
-                  "precoBruto": 25,
-                  "precoLiquido": 25,
-                  "precoUnidade": 25,
-                  "codigoCategoria": "PER",
-                  "codigoNcm": "8467.91.00",
-                  "codigoIva": "IVA",
-                  "codigoUnidadeMedida": "316",
-                  "idProdutoIntegracao": "TLK120",
-                  "centroCustoIntegracao": "5678",
-                  "descricaoSolicitacaoCompra": "",
-                  "descricaoDetalhadaProduto": "Teclado Logitech K120, ABNT2"
-                }
-              ]
-            }
-          ]
-        }
-      }
-    },
-    "body_1": {
-      "type": "object",
-      "required": [
-        "IdIntegracaoPedidoERP"
-      ],
-      "properties": {
-        "IdIntegracaoPedidoERP": {
-          "type": "string",
-          "x-stoplight": {
-            "id": "k944z9gkewgp4"
-          }
-        }
-      },
-      "x-examples": {
-        "Exemplo de request": 4300000063
-      }
-    },
-    "inline_response_200_3": {
-      "type": "object",
-      "properties": {
-        "IdIntegracaoPedidoERP": {
-          "type": "string"
-        },
-        "mensagem": {
-          "type": "string"
-        },
-        "statusCode": {
-          "type": "string"
-        }
-      },
-      "x-examples": {
-        "Example 1": {
-          "IdIntegracaoPedidoERP": "4300000063",
-          "mensagem": "\"Sucesso\"",
-          "statusCode": "200"
-        }
-      }
-    },
-    "body_2": {
-      "type": "object",
-      "required": [
-        "idTenant",
-        "identificador",
-        "senha"
-      ],
-      "properties": {
-        "identificador": {
-          "type": "string",
-          "example": "email@email.com.br",
-          "description": "Email do Usuário\r\n"
-        },
-        "senha": {
-          "type": "string",
-          "example": "123456",
-          "description": "Senha de acesso ao sistema"
-        },
-        "idTenant": {
-          "type": "integer",
-          "example": 1,
-          "description": "Identificador do Tenant da empresa que deseja logar"
-        }
-      }
-    },
-    "inline_response_200_4": {
-      "type": "object",
-      "properties": {
-        "accessToken": {
-          "type": "string",
-          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
-        }
-      }
-    },
-    "inline_response_200_5_categoria": {
-      "type": "object",
-      "properties": {
-        "idCategoriaProduto": {
-          "type": "integer",
-          "description": "Identificador da categoria do produto"
-        },
-        "codigo": {
-          "type": "string",
-          "description": "Código da categoria"
-        },
-        "nome": {
-          "type": "string",
-          "description": "Nome da categoria"
-        },
-        "ativa": {
-          "type": "boolean",
-          "description": "Indica se a categoria está ativa"
-        },
-        "regulamentacao": {
-          "type": "boolean",
-          "description": "Indica se a categoria possui regulamentação específica"
-        },
-        "classificacao": {
-          "type": "integer",
-          "description": "Classificação da categoria"
-        }
-      },
-      "description": "Informações da categoria do produto"
-    },
-    "inline_response_200_5_unidadeMedida": {
-      "type": "object",
-      "properties": {
-        "idUnidadeMedida": {
-          "type": "integer",
-          "description": "Identificador da unidade de medida"
-        },
-        "codigo": {
-          "type": "string",
-          "description": "Código da unidade de medida"
-        },
-        "descricao": {
-          "type": "string",
-          "description": "Descrição da unidade de medida"
-        },
-        "sigla": {
-          "type": "string",
-          "description": "Sigla da unidade de medida"
-        },
-        "permiteQuantidadeFracionada": {
-          "type": "boolean",
-          "description": "Indica se permite quantidade fracionada"
-        }
-      },
-      "description": "Informações da unidade de medida"
-    },
-    "inline_response_200_5_marcas": {
-      "type": "object",
-      "properties": {
-        "idMarca": {
-          "type": "integer",
-          "description": "Identificador da marca"
-        },
-        "codigo": {
-          "type": "string",
-          "description": "Código da marca"
-        },
-        "nome": {
-          "type": "string",
-          "description": "Nome da marca"
-        }
-      },
-      "description": "Informações da marca"
-    },
-    "inline_response_200_5_itens": {
-      "type": "object",
-      "properties": {
-        "idProduto": {
-          "type": "integer",
-          "description": "Identificador único do produto"
-        },
-        "idCategoriaProduto": {
-          "type": "integer",
-          "description": "Identificador da categoria do produto"
-        },
-        "categoria": {
-          "$ref": "#/definitions/inline_response_200_5_categoria"
-        },
-        "idUnidadeMedida": {
-          "type": "integer",
-          "description": "Identificador da unidade de medida do produto"
-        },
-        "unidadeMedida": {
-          "$ref": "#/definitions/inline_response_200_5_unidadeMedida"
-        },
-        "situacao": {
-          "type": "string",
-          "description": "Situação atual do produto"
-        },
-        "tipo": {
-          "type": "string",
-          "description": "Tipo do produto"
-        },
-        "codigo": {
-          "type": "string",
-          "description": "Código identificador do produto"
-        },
-        "codigoNcm": {
-          "type": "string",
-          "description": "Código NCM do produto"
-        },
-        "descricao": {
-          "type": "string",
-          "description": "Descrição resumida do produto"
-        },
-        "descricaoDetalhada": {
-          "type": "string",
-          "description": "Descrição detalhada do produto"
-        },
-        "moeda": {
-          "description": "Moeda utilizada para o produto",
-          "$ref": "#/definitions/Moeda"
-        },
-        "idSolicitante": {
-          "type": "integer",
-          "description": "Identificador do solicitante do produto"
-        },
-        "marcas": {
-          "type": "array",
-          "description": "Lista de marcas associadas ao produto",
-          "items": {
-            "$ref": "#/definitions/inline_response_200_5_marcas"
-          }
-        },
-        "contasContabeis": {
-          "type": "array",
-          "description": "Lista de contas contábeis associadas ao produto",
-          "items": {
-            "type": "object",
-            "description": "Informações da conta contábil",
-            "properties": {}
-          }
-        },
-        "codigoUnico": {
-          "type": "integer",
-          "description": "Código único de identificação do produto"
-        }
-      },
-      "description": "Objeto que representa um produto"
-    },
-    "inline_response_200_5": {
-      "type": "object",
-      "properties": {
-        "numeroPaginas": {
-          "type": "integer",
-          "description": "Quantidade total de páginas do resultado"
-        },
-        "itens": {
-          "type": "array",
-          "description": "Lista de itens retornados na consulta",
-          "items": {
-            "$ref": "#/definitions/inline_response_200_5_itens"
-          }
-        },
-        "total": {
-          "type": "integer",
-          "description": "Quantidade total de registros encontrados"
-        }
-      },
-      "x-examples": {
-        "Example 1": {
-          "numeroPaginas": 5634,
-          "itens": [
-            {
-              "idProduto": 172534,
-              "idCategoriaProduto": 285,
-              "categoria": {
-                "idCategoriaProduto": 285,
-                "codigo": "",
-                "nome": "EPI - EQUIPAMENTOS DE PROTEÇÃO INDIVIDUAL",
-                "ativa": true,
-                "regulamentacao": false,
-                "classificacao": 1
-              },
-              "idUnidadeMedida": 1635,
-              "unidadeMedida": {
-                "idUnidadeMedida": 1635,
-                "codigo": "21",
-                "descricao": "PEÇA",
-                "sigla": "PÇ",
-                "permiteQuantidadeFracionada": false
-              },
-              "situacao": "Ativo",
-              "tipo": "Produto",
-              "codigo": "10653",
-              "codigoNcm": "12345678",
-              "descricao": "Blusão Vaqueta CZ Velcro Tam G Procipa CA 30561",
-              "descricaoDetalhada": "**.",
-              "moeda": "BRL",
-              "idSolicitante": 20628,
-              "marcas": [
-                {
-                  "idMarca": 3282,
-                  "codigo": "",
-                  "nome": "PARAIBUNA           "
-                }
-              ],
-              "contasContabeis": [],
-              "codigoUnico": 950027943
-            },
-            {
-              "idProduto": 172533,
-              "idCategoriaProduto": 285,
-              "categoria": {
-                "idCategoriaProduto": 285,
-                "codigo": "",
-                "nome": "EPI - EQUIPAMENTOS DE PROTEÇÃO INDIVIDUAL",
-                "ativa": true,
-                "regulamentacao": false,
-                "classificacao": 1
-              },
-              "idUnidadeMedida": 1635,
-              "unidadeMedida": {
-                "idUnidadeMedida": 1635,
-                "codigo": "21",
-                "descricao": "PEÇA",
-                "sigla": "PÇ",
-                "permiteQuantidadeFracionada": false
-              },
-              "situacao": "Ativo",
-              "tipo": "Produto",
-              "descricao": "Blusão Trev Amarelo com Capuz e Forro Tamanho M Brascamp CA 28438",
-              "descricaoDetalhada": "**BLUSÃO TREV AM C/CAPUZ C/FORRO C/BOT TAM .",
-              "moeda": "BRL",
-              "idSolicitante": 20628,
-              "marcas": [],
-              "contasContabeis": [],
-              "codigoUnico": 950027942
-            },
-            {
-              "idProduto": 172532,
-              "idCategoriaProduto": 285,
-              "categoria": {
-                "idCategoriaProduto": 285,
-                "codigo": "",
-                "nome": "EPI - EQUIPAMENTOS DE PROTEÇÃO INDIVIDUAL",
-                "ativa": true,
-                "regulamentacao": false,
-                "classificacao": 1
-              },
-              "idUnidadeMedida": 1635,
-              "unidadeMedida": {
-                "idUnidadeMedida": 1635,
-                "codigo": "21",
-                "descricao": "PEÇA",
-                "sigla": "PÇ",
-                "permiteQuantidadeFracionada": false
-              },
-              "situacao": "Ativo",
-              "tipo": "Produto",
-              "descricao": "Blusão Trev Amarelo com Capuz e Forro GG Brascamp",
-              "descricaoDetalhada": "**BLUSÃO TREV AM C/CAPUZ C/FORRO C/BOT TAM GG S/LOGOTIPO 127 BRASCAMP CA 28438**\n\n**Descrição Geral:**\n\nBlusão de segurança de alta visibilidade...",
-              "moeda": "BRL",
-              "idSolicitante": 20628,
-              "marcas": [],
-              "contasContabeis": [],
-              "codigoUnico": 950027941
-            },
-            {
-              "idProduto": 172531,
-              "idCategoriaProduto": 285,
-              "categoria": {
-                "idCategoriaProduto": 285,
-                "codigo": "",
-                "nome": "EPI - EQUIPAMENTOS DE PROTEÇÃO INDIVIDUAL",
-                "ativa": true,
-                "regulamentacao": false,
-                "classificacao": 1
-              },
-              "idUnidadeMedida": 1635,
-              "unidadeMedida": {
-                "idUnidadeMedida": 1635,
-                "codigo": "21",
-                "descricao": "PEÇA",
-                "sigla": "PÇ",
-                "permiteQuantidadeFracionada": false
-              },
-              "situacao": "Ativo",
-              "tipo": "Produto",
-              "descricao": "Blusão Trev Amarelo com Capuz e Forro Tamanho G sem Logotipo Brascamp",
-              "descricaoDetalhada": "**BLUSÃO TREV AM C/CAPUZ C/FORRO C/BOT TAM G S/LOGOTIPO 126 BRASCAMP CA 28438**",
-              "moeda": "BRL",
-              "idSolicitante": 20628,
-              "marcas": [],
-              "contasContabeis": [],
-              "codigoUnico": 950027940
-            },
-            {
-              "idProduto": 172530,
-              "idCategoriaProduto": 285,
-              "categoria": {
-                "idCategoriaProduto": 285,
-                "codigo": "",
-                "nome": "EPI - EQUIPAMENTOS DE PROTEÇÃO INDIVIDUAL",
-                "ativa": true,
-                "regulamentacao": false,
-                "classificacao": 1
-              },
-              "idUnidadeMedida": 1635,
-              "unidadeMedida": {
-                "idUnidadeMedida": 1635,
-                "codigo": "21",
-                "descricao": "PEÇA",
-                "sigla": "PÇ",
-                "permiteQuantidadeFracionada": false
-              },
-              "situacao": "Ativo",
-              "tipo": "Produto",
-              "descricao": "Blusão Raspa Nat Velcro Tam G BVR5602 Procipa CA 36980",
-              "descricaoDetalhada": "**BLUSÃO DE RASPA NATURAL COM VELCRO TAMANHO G BVR5602 PROCIPA CA 36980**",
-              "moeda": "BRL",
-              "idSolicitante": 20628,
-              "marcas": [],
-              "contasContabeis": [],
-              "codigoUnico": 950027939
-            }
-          ],
-          "total": 28169
-        }
-      }
-    },
-    "body_3": {
-      "type": "object",
-      "required": [
-        "idProduto"
-      ],
-      "properties": {
-        "idProduto": {
-          "type": "integer",
-          "description": "Identificador único do produto no sistema"
-        },
-        "codigoCategoriaProduto": {
-          "type": "integer",
-          "description": "Código da categoria do produto"
-        },
-        "codigoUnidadeMedida": {
-          "type": "integer",
-          "description": "Código da unidade de medida utilizada pelo produto"
-        },
-        "tipo": {
-          "description": "Tipo do produto conforme regras de negócio",
-          "$ref": "#/definitions/TipoProduto"
-        },
-        "codigo": {
-          "type": "string",
-          "description": "Código identificador do produto"
-        },
-        "codigoNcm": {
-          "type": "string",
-          "description": "Código NCM (Nomenclatura Comum do Mercosul) do produto"
-        },
-        "descricao": {
-          "type": "string",
-          "description": "Descrição resumida do produto"
-        },
-        "descricaoDetalhada": {
-          "type": "string",
-          "description": "Descrição detalhada e completa do produto"
-        },
-        "consumoMedio": {
-          "type": "integer",
-          "description": "Consumo médio estimado do produto"
-        },
-        "moeda": {
-          "description": "Moeda utilizada como referência para valores do produto",
-          "$ref": "#/definitions/Moeda"
-        },
-        "valorReferencia": {
-          "type": "integer",
-          "description": "Valor de referência do produto na moeda informada"
-        },
-        "marcas": {
-          "type": "array",
-          "description": "Lista de códigos ou identificadores de marcas associadas ao produto",
-          "items": {
-            "type": "string"
-          }
-        },
-        "contasContabeis": {
-          "type": "array",
-          "description": "Lista de códigos de contas contábeis vinculadas ao produto",
-          "items": {
-            "type": "string"
-          }
-        }
-      },
-      "x-examples": {
-        "Example 1": {
-          "idProduto": 0,
-          "codigoCategoriaProduto": 0,
-          "codigoUnidadeMedida": 0,
-          "tipo": "Produto",
-          "codigo": "string",
-          "codigoNcm": "string",
-          "descricao": "string",
-          "descricaoDetalhada": "string",
-          "consumoMedio": 0,
-          "moeda": "Real",
-          "valorReferencia": 0,
-          "marcas": [
-            "string"
-          ],
-          "contasContabeis": [
-            "string"
-          ]
-        }
-      }
-    },
-    "inline_response_200_6": {
-      "type": "object",
-      "properties": {
-        "mensagem": {
-          "type": "string"
-        },
-        "statusCode": {
-          "type": "string"
-        }
-      },
-      "x-examples": {
-        "Example 1": {
-          "mensagem": "string",
-          "statusCode": "string"
-        }
-      }
-    },
-    "body_4": {
-      "type": "object",
-      "required": [
-        "codigoCategoriaProduto",
-        "codigoUnidadeMedida",
-        "descricao",
-        "moeda",
-        "tipo"
-      ],
-      "properties": {
-        "idProduto": {
-          "type": "integer",
-          "description": "Identificador único do produto no sistema"
-        },
-        "codigoCategoriaProduto": {
-          "type": "integer",
-          "description": "Código da categoria do produto"
-        },
-        "codigoUnidadeMedida": {
-          "type": "integer",
-          "description": "Código da unidade de medida utilizada pelo produto"
-        },
-        "tipo": {
-          "description": "Tipo do produto conforme regras de negócio",
-          "$ref": "#/definitions/TipoProduto"
-        },
-        "codigo": {
-          "type": "string",
-          "description": "Código identificador do produto"
-        },
-        "codigoNcm": {
-          "type": "string",
-          "description": "Código NCM (Nomenclatura Comum do Mercosul) do produto"
-        },
-        "descricao": {
-          "type": "string",
-          "description": "Descrição resumida do produto"
-        },
-        "descricaoDetalhada": {
-          "type": "string",
-          "description": "Descrição detalhada e completa do produto"
-        },
-        "consumoMedio": {
-          "type": "integer",
-          "description": "Consumo médio estimado do produto"
-        },
-        "moeda": {
-          "description": "Moeda utilizada como referência para valores do produto",
-          "$ref": "#/definitions/Moeda"
-        },
-        "valorReferencia": {
-          "type": "integer",
-          "description": "Valor de referência do produto na moeda informada"
-        },
-        "marcas": {
-          "type": "array",
-          "description": "Lista de códigos ou identificadores de marcas associadas ao produto",
-          "items": {
-            "type": "string"
-          }
-        },
-        "contasContabeis": {
-          "type": "array",
-          "description": "Lista de códigos de contas contábeis vinculadas ao produto",
-          "items": {
-            "type": "string"
-          }
-        }
-      },
-      "x-examples": {
-        "Example 1": {
-          "idProduto": 0,
-          "codigoCategoriaProduto": 0,
-          "codigoUnidadeMedida": 0,
-          "tipo": "Produto",
-          "codigo": "string",
-          "codigoNcm": "string",
-          "descricao": "string",
-          "descricaoDetalhada": "string",
-          "consumoMedio": 0,
-          "moeda": "Real",
-          "valorReferencia": 0,
-          "marcas": [
-            "string"
-          ],
-          "contasContabeis": [
-            "string"
-          ]
-        }
-      }
-    },
-    "inline_response_200_7": {
-      "type": "object",
-      "properties": {
-        "mensagem": {
-          "type": "string"
-        },
-        "statusCode": {
-          "type": "string",
-          "x-stoplight": {
-            "id": "uscyu2yo0s4ij"
-          }
-        }
-      },
-      "x-examples": {
-        "Example 1": {
-          "sucesso": ""
-        }
-      }
-    },
-    "inline_response_200_8_categoria": {
-      "type": "object",
-      "properties": {
-        "idCategoriaProduto": {
-          "type": "integer",
-          "description": "Identificador único da categoria"
-        },
-        "codigo": {
-          "type": "string",
-          "description": "Código interno da categoria"
-        },
-        "nome": {
-          "type": "string",
-          "description": "Nome da categoria do produto"
-        },
-        "ativa": {
-          "type": "boolean",
-          "description": "Indica se a categoria está ativa"
-        },
-        "regulamentacao": {
-          "type": "boolean",
-          "description": "Indica se a categoria possui regulamentação específica"
-        },
-        "classificacao": {
-          "type": "integer",
-          "description": "Classificação numérica da categoria"
-        }
-      },
-      "description": "Informações da categoria do produto"
-    },
-    "inline_response_200_8_unidadeMedida": {
-      "type": "object",
-      "properties": {
-        "idUnidadeMedida": {
-          "type": "integer",
-          "description": "Identificador único da unidade de medida"
-        },
-        "codigo": {
-          "type": "string",
-          "description": "Código interno da unidade de medida"
-        },
-        "descricao": {
-          "type": "string",
-          "description": "Descrição completa da unidade de medida"
-        },
-        "sigla": {
-          "type": "string",
-          "description": "Sigla da unidade de medida"
-        },
-        "permiteQuantidadeFracionada": {
-          "type": "boolean",
-          "description": "Indica se a unidade permite quantidade fracionada"
-        }
-      },
-      "description": "Dados da unidade de medida utilizada pelo produto"
-    },
-    "inline_response_200_8_marcas": {
-      "type": "object",
-      "properties": {
-        "idMarca": {
-          "type": "integer",
-          "description": "Identificador único da marca"
-        },
-        "codigo": {
-          "type": "string",
-          "description": "Código da marca"
-        },
-        "nome": {
-          "type": "string",
-          "description": "Nome da marca"
-        }
-      }
-    },
-    "inline_response_200_8": {
-      "type": "object",
-      "properties": {
-        "idProduto": {
-          "type": "integer",
-          "description": "Identificador único do produto no sistema"
-        },
-        "idCategoriaProduto": {
-          "type": "integer",
-          "description": "Identificador da categoria associada ao produto"
-        },
-        "categoria": {
-          "$ref": "#/definitions/inline_response_200_8_categoria"
-        },
-        "idUnidadeMedida": {
-          "type": "integer",
-          "description": "Identificador da unidade de medida do produto"
-        },
-        "unidadeMedida": {
-          "$ref": "#/definitions/inline_response_200_8_unidadeMedida"
-        },
-        "situacao": {
-          "type": "string",
-          "description": "Situação atual do produto"
-        },
-        "tipo": {
-          "type": "string",
-          "description": "Tipo do produto conforme regra de negócio"
-        },
-        "codigo": {
-          "type": "string",
-          "description": "Código identificador do produto"
-        },
-        "codigoNcm": {
-          "type": "string",
-          "description": "Código NCM (Nomenclatura Comum do Mercosul) do produto"
-        },
-        "descricao": {
-          "type": "string",
-          "description": "Descrição resumida do produto"
-        },
-        "descricaoDetalhada": {
-          "type": "string",
-          "description": "Descrição detalhada e completa do produto"
-        },
-        "moeda": {
-          "description": "Moeda utilizada para precificação do produto",
-          "$ref": "#/definitions/Moeda"
-        },
-        "idSolicitante": {
-          "type": "integer",
-          "description": "Identificador do solicitante responsável pelo produto"
-        },
-        "marcas": {
-          "type": "array",
-          "description": "Lista de marcas associadas ao produto",
-          "items": {
-            "$ref": "#/definitions/inline_response_200_8_marcas"
-          }
-        },
-        "contasContabeis": {
-          "type": "array",
-          "description": "Lista de contas contábeis vinculadas ao produto",
-          "items": {
-            "type": "object",
-            "properties": {}
-          }
-        },
-        "codigoUnico": {
-          "type": "integer",
-          "description": "Código único utilizado para identificação interna do produto"
-        }
-      },
-      "x-examples": {
-        "Example 1": {
-          "idProduto": 172534,
-          "idCategoriaProduto": 285,
-          "categoria": {
-            "idCategoriaProduto": 285,
-            "codigo": "",
-            "nome": "EPI - EQUIPAMENTOS DE PROTEÇÃO INDIVIDUAL",
-            "ativa": true,
-            "regulamentacao": false,
-            "classificacao": 1
-          },
-          "idUnidadeMedida": 1635,
-          "unidadeMedida": {
-            "idUnidadeMedida": 1635,
-            "codigo": "21",
-            "descricao": "PEÇA",
-            "sigla": "PÇ",
-            "permiteQuantidadeFracionada": false
-          },
-          "situacao": "Ativo",
-          "tipo": "Produto",
-          "codigo": "10653",
-          "codigoNcm": "12345678",
-          "descricao": "Blusão Vaqueta CZ Velcro Tam G Procipa CA 30561",
-          "descricaoDetalhada": "**BLUSÃO DE VAQUETA CZ VELCRO TAM G 43 BV5601 PROCIPA CA 30561**\n\n**Descrição Geral:**\n\nO blusão de vaqueta CZ Velcro da Procipa, tamanho G (43), modelo BV5601, com Certificado de Aprovação (CA) número 30561, é um Equipamento de Proteção Individual (EPI) projetado para proteger o tronco do usuário contra agentes abrasivos, escoriantes, cortantes e perfurantes. Fabricado em couro vaqueta de alta qualidade, oferece durabilidade e resistência em ambientes de trabalho exigentes.\n\n**Características Técnicas:**\n\n*   **Material:** Couro vaqueta curtido ao cromo, selecionado para garantir resistência e flexibilidade.\n*   **Tamanho:** G (43).\n*   **Fechamento:** Frontal com zíper e velcro, proporcionando ajuste seguro e facilidade ao vestir e despir.\n*   **Costura:** Reforçada com linha de alta tenacidade, aumentando a vida útil do blusão.\n*   **Acabamento:** Bordas com acabamento para evitar desfiados e aumentar o conforto.\n*   **Design:** Anatômico, permitindo maior liberdade de movimento.\n*   **Cor:** Cor padrão do couro vaqueta (variações de tonalidade são inerentes ao material).\n\n**Proteção:**\n\n*   Proteção do tronco contra agentes abrasivos, escoriantes, cortantes e perfurantes.\n*   Resistência ao calor de contato (pequenas chamas, calor radiante e respingos de solda, em algumas aplicações específicas, dependendo da espessura e tratamento do couro).\n\n**Aplicabilidade:**\n\n*   Indústria metalúrgica.\n*   Indústria automobilística.\n*   Construção civil.\n*   Soldagem (proteção contra respingos).\n*   Manutenção industrial.\n*   Atividades que envolvam riscos de abrasão, cortes e perfurações no tronco.\n*   Trabalhos com esmerilhadeira, lixadeira e outras ferramentas abrasivas.\n\n**Contraindicações/Restrições:**\n\n*   Não utilizar em ambientes com exposição a agentes químicos agressivos, como ácidos fortes e solventes, que podem danificar o couro.\n*   Não utilizar em situações que envolvam risco de choque elétrico.\n*   Não utilizar em ambientes com temperaturas extremas, que podem comprometer a integridade do couro.\n*   Não recomendado para proteção contra riscos térmicos elevados (fogo intenso ou calor extremo).\n*   Verificar a integridade do blusão antes de cada uso. Em caso de danos, substituir imediatamente.\n*   O blusão deve ser utilizado no tamanho adequado para garantir a proteção e o conforto do usuário.\n\n**Certificações:**\n\n*   Certificado de Aprovação (CA) número 30561, emitido pelo Ministério do Trabalho e Emprego (MTE), atestando a conformidade do produto com as normas de segurança aplicáveis.",
-          "moeda": "BRL",
-          "idSolicitante": 20628,
-          "marcas": [
-            {
-              "idMarca": 3282,
-              "codigo": "",
-              "nome": "PARAIBUNA           "
-            }
-          ],
-          "contasContabeis": [],
-          "codigoUnico": 950027943
-        }
-      }
-    },
-    "1.0solicitacoescomprasintegracao_itens": {
-      "type": "object",
-      "required": [
-        "codigoCategoria",
-        "codigoCompradorErp",
-        "codigoFilialEmpresa",
-        "codigoItemRc",
-        "codigoRc",
-        "descricaoUnidadeMedida",
-        "moeda",
-        "nomeCategoria",
-        "quantidade",
-        "quantidadeUnidadesPreco",
-        "siglaUnidadeMedida",
-        "valorReferencia"
-      ],
-      "properties": {
-        "codigoItemRc": {
-          "type": "string",
-          "description": "Código identificador do item da requisição de compra"
-        },
-        "codigoRc": {
-          "type": "string",
-          "description": "Código da requisição de compra associada ao item"
-        },
-        "descricaoItemRc": {
-          "type": "string",
-          "description": "Descrição do item da requisição de compra (Obrigatório caso Codigo Produto vazio ou nulo)"
-        },
-        "codigoCompradorErp": {
-          "type": "string",
-          "description": "Código do comprador no sistema ERP"
-        },
-        "codigoContrato": {
-          "type": "integer",
-          "description": "Código do contrato associado ao item da requisição"
-        },
-        "infoRequisitante": {
-          "type": "string",
-          "description": "Informações adicionais sobre o requisitante"
-        },
-        "nomeProduto": {
-          "type": "string",
-          "description": "Nome do produto solicitado (Obrigatório caso Codigo Produto vazio ou nulo)"
-        },
-        "descricaoProduto": {
-          "type": "string",
-          "description": "Descrição detalhada do produto solicitado (Obrigatório caso Codigo Produto vazio ou nulo)"
-        },
-        "codigoProduto": {
-          "type": "string",
-          "description": "Código do produto no sistema de origem"
-        },
-        "tipoProduto": {
-          "type": "string",
-          "description": "Tipo do produto conforme classificação de negócio (Produto, Serviço) (Obrigatório caso CodigoProduto esteja preenchido)"
-        },
-        "utilizacaoProduto": {
-          "type": "string",
-          "description": "Utilização ou finalidade do produto (consumo, revenda, ativo, etc. ) (Obrigatório caso CodigoProduto esteja preenchido)"
-        },
-        "codigoOrigemProduto": {
-          "type": "string",
-          "description": "Código que identifica a origem do produto (Obrigatório caso CodigoProduto esteja preenchido)"
-        },
-        "ncm": {
-          "type": "string",
-          "description": "Código NCM do produto (Obrigatório caso CodigoProduto esteja preenchido)"
-        },
-        "codigoFilialEmpresa": {
-          "type": "string",
-          "description": "Código da filial da empresa solicitante"
-        },
-        "codigoEmpresa": {
-          "type": "string",
-          "description": "Código da empresa solicitante"
-        },
-        "codigoDeposito": {
-          "type": "string",
-          "description": "Código do depósito ou almoxarifado"
-        },
-        "codigoCategoria": {
-          "type": "string",
-          "description": "Código da categoria do produto"
-        },
-        "nomeCategoria": {
-          "type": "string",
-          "description": "Nome da categoria do produto"
-        },
-        "quantidade": {
-          "type": "integer",
-          "description": "Quantidade solicitada do produto"
-        },
-        "siglaUnidadeMedida": {
-          "type": "string",
-          "description": "Sigla da unidade de medida do produto"
-        },
-        "descricaoUnidadeMedida": {
-          "type": "string",
-          "description": "Descrição da unidade de medida do produto"
-        },
-        "dataRemessa": {
-          "type": "string",
-          "description": "Data prevista para remessa ou entrega do item"
-        },
-        "valorReferencia": {
-          "type": "integer",
-          "description": "Valor de referência do item"
-        },
-        "quantidadeUnidadesPreco": {
-          "type": "integer",
-          "description": "Quantidade de unidades considerada para cálculo de preço"
-        },
-        "tipoItem": {
-          "type": "string",
-          "description": "Tipo do item da requisição (material, serviço, ativo, etc.)"
-        },
-        "codigoClassificacaoContabil": {
-          "type": "string",
-          "description": "Código de classificação contábil do item"
-        },
-        "fornecedorFixo": {
-          "type": "string",
-          "description": "Indica o fornecedor fixo definido para o item"
-        },
-        "fornecedorPretendido": {
-          "type": "string",
-          "description": "Fornecedor pretendido para atendimento do item"
-        },
-        "moeda": {
-          "type": "string",
-          "description": "Moeda utilizada para valores do item ()"
-        },
-        "previsaoEntregaDias": {
-          "type": "integer",
-          "description": "Previsão de entrega em dias"
-        },
-        "codigoContaContabil": {
-          "type": "string",
-          "description": "Código da conta contábil associada ao item"
-        },
-        "nomeContaContabil": {
-          "type": "string",
-          "description": "Nome da conta contábil associada ao item"
-        },
-        "codigoCentroCusto": {
-          "type": "string",
-          "description": "Código do centro de custo associado ao item"
-        },
-        "centroCusto": {
-          "type": "string",
-          "description": "Nome ou descrição do centro de custo"
-        },
-        "codigoImobilizado": {
-          "type": "string",
-          "description": "Código do bem imobilizado associado ao item (Obrigatório quando CodigoClassificacaoContabil == \"A\")"
-        },
-        "subNumeroImobilizado": {
-          "type": "string",
-          "description": "Subnúmero identificador do bem imobilizado"
-        },
-        "nomeImobilizado": {
-          "type": "string",
-          "description": "Nome ou descrição do bem imobilizado (Obrigatório quando CodigoClassificacaoContabil == \"A\")"
-        },
-        "ordem": {
-          "type": "string",
-          "description": "Ordem interna ou número de ordem associada ao item (Obrigatório quando CodigoClassificacaoContabil == \"F\")"
-        },
-        "elementoPep": {
-          "type": "string",
-          "description": "Código do elemento PEP (Projeto/Estrutura de Projeto) (Obrigatório quando CodigoClassificacaoContabil == \"P\" ou “N”)"
-        },
-        "diagramaRede": {
-          "type": "string",
-          "description": "Código do diagrama de rede associado ao item"
-        },
-        "pedidoEliminado": {
-          "type": "string",
-          "description": "Indica se o pedido relacionado ao item foi eliminado"
-        },
-        "categoriaDemanda": {
-          "type": "string",
-          "description": "Categoria da demanda do item"
-        },
-        "status": {
-          "type": "string",
-          "description": "Status atual do item da requisição"
-        },
-        "sla": {
-          "type": "string",
-          "description": "SLA associado ao atendimento do item"
-        },
-        "nomeResponsavel": {
-          "type": "string",
-          "description": "Nome do responsável pelo acompanhamento do item"
-        }
-      }
-    },
-    "body_5": {
-      "type": "object",
-      "required": [
-        "codigoRc",
-        "dataCriacaoRc",
-        "departamento",
-        "descricaoRc",
-        "emailRequisitante",
-        "itens",
-        "nomeRequisitante",
-        "ramalRequisitante",
-        "tipoDocumento",
-        "userRequisitante"
-      ],
-      "properties": {
-        "codigoRc": {
-          "type": "string",
-          "description": "Código identificador da requisição de compra"
-        },
-        "tipoDocumento": {
-          "type": "string",
-          "description": "Tipo de documento da requisição de compra"
-        },
-        "descricaoRc": {
-          "type": "string",
-          "description": "Descrição ou observação associada à requisição de compra"
-        },
-        "userRequisitante": {
-          "type": "string",
-          "description": "Usuário responsável pela criação da requisição de compra"
-        },
-        "nomeRequisitante": {
-          "type": "string",
-          "description": "Nome completo do requisitante"
-        },
-        "departamento": {
-          "type": "string",
-          "description": "Departamento do requisitante"
-        },
-        "emailRequisitante": {
-          "type": "string",
-          "description": "E-mail do requisitante"
-        },
-        "telefoneRequisitante": {
-          "type": "string",
-          "description": "Telefone de contato do requisitante"
-        },
-        "ramalRequisitante": {
-          "type": "string",
-          "description": "Ramal interno do requisitante"
-        },
-        "dataCriacaoRc": {
-          "type": "string",
-          "description": "Data de criação da requisição de compra"
-        },
-        "dataLiberacaoRc": {
-          "type": "string",
-          "description": "Data de liberação/aprovação da requisição de compra"
-        },
-        "valorRequisicao": {
-          "type": "integer",
-          "description": "Valor total da requisição de compra"
-        },
-        "itens": {
-          "type": "array",
-          "description": "Lista de itens associados à requisição de compra",
-          "items": {
-            "$ref": "1.0solicitacoescomprasintegracao_itens"
-          }
-        }
-      },
-      "x-examples": {
-        "Example 1": {
-          "codigoRc": "string",
-          "tipoDocumento": "string",
-          "descricaoRc": "string",
-          "userRequisitante": "string",
-          "nomeRequisitante": "string",
-          "departamento": "string",
-          "emailRequisitante": "string",
-          "telefoneRequisitante": "string",
-          "ramalRequisitante": "string",
-          "dataCriacaoRc": "2026-01-23T20:10:47.984Z",
-          "dataLiberacaoRc": "2026-01-23T20:10:47.984Z",
-          "valorRequisicao": 0,
-          "itens": [
-            {
-              "codigoItemRc": "string",
-              "codigoRc": "string",
-              "descricaoItemRc": "string",
-              "codigoCompradorErp": "string",
-              "codigoContrato": 0,
-              "infoRequisitante": "string",
-              "nomeProduto": "string",
-              "descricaoProduto": "string",
-              "codigoProduto": "string",
-              "tipoProduto": "string",
-              "utilizacaoProduto": "string",
-              "codigoOrigemProduto": "string",
-              "ncm": "string",
-              "codigoFilialEmpresa": "string",
-              "codigoEmpresa": "string",
-              "codigoDeposito": "string",
-              "codigoCategoria": "string",
-              "nomeCategoria": "string",
-              "quantidade": 0,
-              "siglaUnidadeMedida": "string",
-              "descricaoUnidadeMedida": "string",
-              "dataRemessa": "2026-01-23T20:10:47.984Z",
-              "valorReferencia": 0,
-              "quantidadeUnidadesPreco": 0,
-              "tipoItem": "string",
-              "codigoClassificacaoContabil": "string",
-              "fornecedorFixo": "string",
-              "fornecedorPretendido": "string",
-              "moeda": "string",
-              "previsaoEntregaDias": 0,
-              "codigoContaContabil": "string",
-              "nomeContaContabil": "string",
-              "codigoCentroCusto": "string",
-              "centroCusto": "string",
-              "codigoImobilizado": "string",
-              "subNumeroImobilizado": "string",
-              "nomeImobilizado": "string",
-              "ordem": "string",
-              "elementoPep": "string",
-              "diagramaRede": "string",
-              "pedidoEliminado": "string",
-              "categoriaDemanda": "string",
-              "status": "string",
-              "sla": "string",
-              "nomeResponsavel": "string"
-            }
-          ]
-        }
-      }
-    },
-    "inline_response_200_9": {
-      "type": "object",
-      "properties": {
-        "codigoRc": {
-          "type": "string"
-        },
-        "mensagem": {
-          "type": "string"
-        },
-        "statusCode": {
-          "type": "string"
-        }
-      },
-      "x-examples": {
-        "Example 1": {
-          "codigoRc": "string",
-          "mensagem": "string",
-          "statusCode": "string"
-        }
-      }
-    },
-    "body_6": {
-      "type": "object",
-      "properties": {
-        "Pagina": {
-          "type": "integer"
-        },
-        "ItensPorPagina": {
-          "type": "integer"
-        }
-      },
-      "x-examples": {
-        "Example 1": {
-          "Pagina": 0,
-          "ItensPorPagina": 0
-        }
-      }
-    },
-    "inline_response_200_10_itens": {
-      "type": "object",
-      "properties": {
-        "idPedidoItem": {
-          "type": "integer"
-        }
-      }
-    },
-    "inline_response_200_10_itens_1": {
-      "type": "object",
-      "properties": {
-        "idPedido": {
-          "type": "integer"
-        },
-        "itens": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/inline_response_200_10_itens"
-          }
-        }
-      }
-    },
-    "inline_response_200_10": {
-      "type": "object",
-      "properties": {
-        "numeroPaginas": {
-          "type": "integer"
-        },
-        "itens": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/inline_response_200_10_itens_1"
-          }
-        },
-        "total": {
-          "type": "integer"
-        }
-      },
-      "x-examples": {
-        "Example 1": {
-          "numeroPaginas": 1,
-          "itens": [
-            {
-              "idPedido": 221,
-              "itens": [
-                {
-                  "idPedidoItem": 878
-                }
-              ]
-            },
-            {
-              "idPedido": 643,
-              "itens": [
-                {
-                  "idPedidoItem": 2005
-                }
-              ]
-            }
-          ],
-          "total": 2
-        }
-      }
-    }
-  }
-}
+swagger: '2.0'
+info:
+  description: "DocS_ > Documentação APIS\r\n\r\n"
+  version: 1.0.0
+  title: Documentação de APIs Smarkets
+host: api-hom.smarkets.com.br
+basePath: /api
+tags:
+  - name: Pedidos
+    description: APIs de pedidos
+  - name: Cotação
+    description: APIs de Cotação
+  - name: Autenticação
+    description: API de autenticação
+  - name: Produto
+    description: APIs de produto
+  - name: Solicitação de compra
+    description: API de solicitação de compra
+schemes:
+  - https
+security:
+  - Bearer: []
+paths:
+  /pedidos-integracao/{idPedido}:
+    get:
+      tags:
+        - Pedidos
+      summary: >-
+        Permite consultar dados de um pedido através do código do Pedido do
+        Marketplace.
+      description: api-pedidos-integracao
+      operationId: ''
+      parameters:
+        - name: idPedido
+          in: path
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          examples: {}
+          schema:
+            $ref: '#/definitions/Pedido'
+  /pedidos-integracao/:
+    put:
+      tags:
+        - Pedidos
+      summary: >-
+        Permite alterar alguns dados de pedido no Marketplace que não estejam
+        com situação faturado, enviado ou recebido.
+      operationId: put-api-pedidos-integracao
+      parameters:
+        - x-examples:
+            Exemplo de request:
+              IdPedido: 22885
+              Status: Aguardando aprovação interna
+              Itens:
+                - IdPedido: 22885
+                  IdPedidoItem: 40424
+                  Quantidade: 10.5
+                  PrecoBruto: 100
+                  PrecoLiquido: 90
+                  PrecoUnidade: 9
+          in: body
+          name: body
+          description: ''
+          required: false
+          schema:
+            $ref: '#/definitions/body_put_pedido'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/result-pedido-put'
+    get:
+      tags:
+        - Pedidos
+      summary: >-
+        Permite obter informações de todos os pedidos com status definidos de forma paginada.
+      operationId: get-api-pedidos-integracao
+      parameters:
+        - name: pagina
+          in: query
+          description: Quantidade de páginas
+          required: false
+          type: string
+        - name: itensPorPagina
+          in: query
+          description: Quantidade de itens por página
+          required: false
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/result_pedidos_paginados'
+  /pedidos-integracao/pendentesintegracao:
+    get:
+      tags:
+        - Pedidos
+      summary: >-
+        Permite consultar lista de pedidos na situação pendente de integração e
+        aguardando aprovação interna do Marketplace.
+      operationId: get-api-pedidos-integracao-pendentesintegracao?idTenant=-idTenant
+      parameters:
+        - name: idTenant
+          in: query
+          description: Identificado do tenant da empresa
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/result_pedido'
+  /pedidos-integracao/cancelados/finalizados:
+    put:
+      tags:
+        - Pedidos
+      summary: Permite cancelar pedidos no Marketplace
+      operationId: put-api-pedidos-integracao-cancelados-finalizados
+      parameters:
+        - in: body
+          name: body
+          required: false
+          schema:
+            $ref: '#/definitions/body_cancelar_pedido'
+      security: []
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/result_cancelar_pedido'
+  /autenticacoes-integracao:
+    post:
+      tags:
+        - Autenticação
+      summary: Permite obter o token de acesso
+      operationId: post-api-autenticacoes-integracao
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/body_autenticacao'
+      security: []
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/result_autenticacao'
+  /1.0/produtos-integracao:
+    get:
+      tags:
+        - Produto
+      summary: >-
+        Permite consultar dados de todos os produtos cadastrados no tenant do
+        Marketplace de forma paginada.
+      operationId: get-1.0-produtos-integracao
+      parameters:
+        - name: pagina
+          in: query
+          description: Quantidade de páginas
+          required: false
+          type: string
+        - name: itensPorPagina
+          in: query
+          description: Quantidade de itens por página
+          required: false
+          type: string
+        - name: itemOrdenar
+          in: query
+          description: Tipo de ordenação por Item (EX. IdProduto)
+          required: false
+          type: string
+        - name: Ordenação
+          in: query
+          description: 'Tipo de ordenação (EX: ASC, DESC)'
+          required: false
+          type: string
+      responses:
+        '200':
+          description: OK
+          examples:
+            Example 1:
+              numeroPaginas: 5634
+              itens:
+                - idProduto: 172534
+                  idCategoriaProduto: 285
+                  categoria:
+                    idCategoriaProduto: 285
+                    codigo: ''
+                    nome: EPI - EQUIPAMENTOS DE PROTEÇÃO INDIVIDUAL
+                    ativa: true
+                    regulamentacao: false
+                    classificacao: 1
+                  idUnidadeMedida: 1635
+                  unidadeMedida:
+                    idUnidadeMedida: 1635
+                    codigo: '21'
+                    descricao: PEÇA
+                    sigla: PÇ
+                    permiteQuantidadeFracionada: false
+                  situacao: Ativo
+                  tipo: Produto
+                  codigo: '10653'
+                  codigoNcm: '12345678'
+                  descricao: Blusão Vaqueta CZ Velcro Tam G Procipa CA 30561
+                  descricaoDetalhada: '**.'
+                  moeda: BRL
+                  idSolicitante: 20628
+                  marcas:
+                    - idMarca: 3282
+                      codigo: ''
+                      nome: 'PARAIBUNA           '
+                  contasContabeis: []
+                  codigoUnico: 950027943
+                - idProduto: 172533
+                  idCategoriaProduto: 285
+                  categoria:
+                    idCategoriaProduto: 285
+                    codigo: ''
+                    nome: EPI - EQUIPAMENTOS DE PROTEÇÃO INDIVIDUAL
+                    ativa: true
+                    regulamentacao: false
+                    classificacao: 1
+                  idUnidadeMedida: 1635
+                  unidadeMedida:
+                    idUnidadeMedida: 1635
+                    codigo: '21'
+                    descricao: PEÇA
+                    sigla: PÇ
+                    permiteQuantidadeFracionada: false
+                  situacao: Ativo
+                  tipo: Produto
+                  descricao: >-
+                    Blusão Trev Amarelo com Capuz e Forro Tamanho M Brascamp CA
+                    28438
+                  descricaoDetalhada: '**BLUSÃO TREV AM C/CAPUZ C/FORRO C/BOT TAM .'
+                  moeda: BRL
+                  idSolicitante: 20628
+                  marcas: []
+                  contasContabeis: []
+                  codigoUnico: 950027942
+                - idProduto: 172532
+                  idCategoriaProduto: 285
+                  categoria:
+                    idCategoriaProduto: 285
+                    codigo: ''
+                    nome: EPI - EQUIPAMENTOS DE PROTEÇÃO INDIVIDUAL
+                    ativa: true
+                    regulamentacao: false
+                    classificacao: 1
+                  idUnidadeMedida: 1635
+                  unidadeMedida:
+                    idUnidadeMedida: 1635
+                    codigo: '21'
+                    descricao: PEÇA
+                    sigla: PÇ
+                    permiteQuantidadeFracionada: false
+                  situacao: Ativo
+                  tipo: Produto
+                  descricao: Blusão Trev Amarelo com Capuz e Forro GG Brascamp
+                  descricaoDetalhada: >-
+                    **BLUSÃO TREV AM C/CAPUZ C/FORRO C/BOT TAM GG S/LOGOTIPO 127
+                    BRASCAMP CA 28438**
+
+
+                    **Descrição Geral:**
+
+
+                    Blusão de segurança de alta visibilidade...
+                  moeda: BRL
+                  idSolicitante: 20628
+                  marcas: []
+                  contasContabeis: []
+                  codigoUnico: 950027941
+                - idProduto: 172531
+                  idCategoriaProduto: 285
+                  categoria:
+                    idCategoriaProduto: 285
+                    codigo: ''
+                    nome: EPI - EQUIPAMENTOS DE PROTEÇÃO INDIVIDUAL
+                    ativa: true
+                    regulamentacao: false
+                    classificacao: 1
+                  idUnidadeMedida: 1635
+                  unidadeMedida:
+                    idUnidadeMedida: 1635
+                    codigo: '21'
+                    descricao: PEÇA
+                    sigla: PÇ
+                    permiteQuantidadeFracionada: false
+                  situacao: Ativo
+                  tipo: Produto
+                  descricao: >-
+                    Blusão Trev Amarelo com Capuz e Forro Tamanho G sem Logotipo
+                    Brascamp
+                  descricaoDetalhada: >-
+                    **BLUSÃO TREV AM C/CAPUZ C/FORRO C/BOT TAM G S/LOGOTIPO 126
+                    BRASCAMP CA 28438**
+                  moeda: BRL
+                  idSolicitante: 20628
+                  marcas: []
+                  contasContabeis: []
+                  codigoUnico: 950027940
+                - idProduto: 172530
+                  idCategoriaProduto: 285
+                  categoria:
+                    idCategoriaProduto: 285
+                    codigo: ''
+                    nome: EPI - EQUIPAMENTOS DE PROTEÇÃO INDIVIDUAL
+                    ativa: true
+                    regulamentacao: false
+                    classificacao: 1
+                  idUnidadeMedida: 1635
+                  unidadeMedida:
+                    idUnidadeMedida: 1635
+                    codigo: '21'
+                    descricao: PEÇA
+                    sigla: PÇ
+                    permiteQuantidadeFracionada: false
+                  situacao: Ativo
+                  tipo: Produto
+                  descricao: Blusão Raspa Nat Velcro Tam G BVR5602 Procipa CA 36980
+                  descricaoDetalhada: >-
+                    **BLUSÃO DE RASPA NATURAL COM VELCRO TAMANHO G BVR5602
+                    PROCIPA CA 36980**
+                  moeda: BRL
+                  idSolicitante: 20628
+                  marcas: []
+                  contasContabeis: []
+                  codigoUnico: 950027939
+              total: 28169
+          schema:
+            $ref: '#/definitions/result_get_produtos'
+    post:
+      tags:
+        - Produto
+      summary: Permite criar produtos no Marketplace.
+      operationId: post-1.0-produtos-integracao
+      parameters:
+        - name: IdTenant
+          in: header
+          description: Identificado do tenant da empresa
+          required: false
+          type: string
+        - in: body
+          name: body
+          required: false
+          schema:
+            $ref: '#/definitions/body_post_produto'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/result_post_produto'
+    put:
+      tags:
+        - Produto
+      summary: Permite alterar dados do produto cadastrado no Marketplace
+      operationId: put-1.0-produtos-integracao
+      parameters:
+        - name: idTenant
+          in: query
+          description: Identificado do tenant da empresa
+          required: false
+          type: string
+        - in: body
+          name: body
+          description: ''
+          required: false
+          schema:
+            $ref: '#/definitions/body_put_produto'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/result_put_produto'
+  /1.0/produtos-integracao/{idProduto}:
+    get:
+      tags:
+        - Produto
+      summary: >-
+        Permite consultar dados de um produto cadastrado no tenant do
+        Marketplace através código de um produto.
+      operationId: get-api-1.0-produtos-integracao-idProduto
+      parameters:
+        - name: idProduto
+          in: path
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          examples:
+            Exemplo Retorno:
+              idProduto: 172534
+              idCategoriaProduto: 285
+              categoria:
+                idCategoriaProduto: 285
+                codigo: ''
+                nome: EPI - EQUIPAMENTOS DE PROTEÇÃO INDIVIDUAL
+                ativa: true
+                regulamentacao: false
+                classificacao: 1
+              idUnidadeMedida: 1635
+              unidadeMedida:
+                idUnidadeMedida: 1635
+                codigo: '21'
+                descricao: PEÇA
+                sigla: PÇ
+                permiteQuantidadeFracionada: false
+              situacao: Ativo
+              tipo: Produto
+              codigo: '10653'
+              codigoNcm: '12345678'
+              descricao: Blusão Vaqueta CZ Velcro Tam G Procipa CA 30561
+              descricaoDetalhada: >-
+                **BLUSÃO DE VAQUETA CZ VELCRO TAM G 43 BV5601 PROCIPA CA 30561**
+
+
+                **Descrição Geral:**
+
+
+                O blusão de vaqueta CZ Velcro da Procipa, tamanho G (43), modelo
+                BV5601, com Certificado de Aprovação (CA) número 30561, é um
+                Equipamento de Proteção Individual (EPI) projetado para proteger
+                o tronco do usuário contra agentes abrasivos, escoriantes,
+                cortantes e perfurantes. Fabricado em couro vaqueta de alta
+                qualidade, oferece durabilidade e resistência em ambientes de
+                trabalho exigentes.
+
+
+                **Características Técnicas:**
+
+
+                *   **Material:** Couro vaqueta curtido ao cromo, selecionado
+                para garantir resistência e flexibilidade.
+
+                *   **Tamanho:** G (43).
+
+                *   **Fechamento:** Frontal com zíper e velcro, proporcionando
+                ajuste seguro e facilidade ao vestir e despir.
+
+                *   **Costura:** Reforçada com linha de alta tenacidade,
+                aumentando a vida útil do blusão.
+
+                *   **Acabamento:** Bordas com acabamento para evitar desfiados
+                e aumentar o conforto.
+
+                *   **Design:** Anatômico, permitindo maior liberdade de
+                movimento.
+
+                *   **Cor:** Cor padrão do couro vaqueta (variações de
+                tonalidade são inerentes ao material).
+
+
+                **Proteção:**
+
+
+                *   Proteção do tronco contra agentes abrasivos, escoriantes,
+                cortantes e perfurantes.
+
+                *   Resistência ao calor de contato (pequenas chamas, calor
+                radiante e respingos de solda, em algumas aplicações
+                específicas, dependendo da espessura e tratamento do couro).
+
+
+                **Aplicabilidade:**
+
+
+                *   Indústria metalúrgica.
+
+                *   Indústria automobilística.
+
+                *   Construção civil.
+
+                *   Soldagem (proteção contra respingos).
+
+                *   Manutenção industrial.
+
+                *   Atividades que envolvam riscos de abrasão, cortes e
+                perfurações no tronco.
+
+                *   Trabalhos com esmerilhadeira, lixadeira e outras ferramentas
+                abrasivas.
+
+
+                **Contraindicações/Restrições:**
+
+
+                *   Não utilizar em ambientes com exposição a agentes químicos
+                agressivos, como ácidos fortes e solventes, que podem danificar
+                o couro.
+
+                *   Não utilizar em situações que envolvam risco de choque
+                elétrico.
+
+                *   Não utilizar em ambientes com temperaturas extremas, que
+                podem comprometer a integridade do couro.
+
+                *   Não recomendado para proteção contra riscos térmicos
+                elevados (fogo intenso ou calor extremo).
+
+                *   Verificar a integridade do blusão antes de cada uso. Em caso
+                de danos, substituir imediatamente.
+
+                *   O blusão deve ser utilizado no tamanho adequado para
+                garantir a proteção e o conforto do usuário.
+
+
+                **Certificações:**
+
+
+                *   Certificado de Aprovação (CA) número 30561, emitido pelo
+                Ministério do Trabalho e Emprego (MTE), atestando a conformidade
+                do produto com as normas de segurança aplicáveis.
+              moeda: BRL
+              idSolicitante: 20628
+              marcas:
+                - idMarca: 3282
+                  codigo: ''
+                  nome: 'PARAIBUNA           '
+              contasContabeis: []
+              codigoUnico: 950027943
+          schema:
+            $ref: '#/definitions/result_get_produto'
+  /1.0/solicitacoescompras-integracao:
+    post:
+      tags:
+        - Solicitação de compra
+      summary: Permite criar solicitação de compras no Marketplace
+      operationId: post-1.0-solicitacoescompras-integracao
+      parameters:
+        - in: body
+          name: body
+          required: false
+          schema:
+            $ref: '#/definitions/Solicitacao_Compra'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/result_solicitacao_compra'
+  /pedidos-integracao/pendentes-cancelamento:
+    get:
+      tags:
+        - Pedidos
+      summary: >-
+        Permite consultar lista de pedidos na situação pendente de cancelamento
+        no Marketplace.
+      operationId: get-pedidos-integracao-pendentes-cancelamento
+      parameters:
+        - in: body
+          name: body
+          required: false
+          schema:
+            $ref: '#/definitions/body_pedido_pendente_cancelamento'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/result_pedido_pendente_cancelamento'
+  /cotacoes-integracao/{idCotacao}/pdf:
+    get:
+      tags:
+        - Cotação
+      summary: Permitir obter o mapa comparativo da cotação
+      operationId: get-cotacoes-integracao-idCotacao-pdf
+      parameters:
+        - name: idCotacao
+          in: path
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+securityDefinitions:
+  Bearer:
+    type: apiKey
+    name: Authorization
+    in: header
+definitions:
+  Moeda:
+    type: string
+    description: 'Moeda utilizada como referência para valores do produto'
+    enum:
+      - Real = 1
+      - DolarAmericano = 2
+      - Libra = 3
+      - Euro = 4
+      - IeneJapones = 5
+      - FrancoSuico = 6
+      - DolarAustraliano = 7
+      - DolarCanadense = 8
+      - IuaneChines = 9
+      - PesoArgentino = 10
+  TipoProduto:
+    type: string
+    description: 'Tipo do produto conforme regras de negócio'
+    enum:
+      - Produto = 1
+      - Servico = 2
+  Pedido_Item:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: Identificador único do item do pedido
+      codigoProduto:
+        type: string
+        description: Código do produto
+      nomeProduto:
+        type: string
+        description: Nome ou descrição resumida do produto
+      quantidade:
+        type: integer
+        description: Quantidade solicitada do produto
+      precoBruto:
+        type: integer
+        description: Valor bruto do item antes de descontos
+      precoLiquido:
+        type: integer
+        description: Valor líquido do item após aplicação de descontos
+      precoUnidade:
+        type: integer
+        description: Preço unitário do produto
+      codigoCategoria:
+        type: string
+        description: Código da categoria do produto
+      codigoNcm:
+        type: string
+        description: Código NCM do produto
+      codigoRc:
+        type: string
+        description: Código da requisição de compra associada ao item
+      codigoUnidadeMedida:
+        type: string
+        description: Código da unidade de medida do produto
+      idProdutoIntegracao:
+        type: string
+        description: Identificador do produto no sistema de integração
+      centroCustoIntegracao:
+        type: string
+        description: Centro de custo associado ao item
+      descricaoSolicitacaoCompra:
+        type: string
+        description: Descrição informada na solicitação de compra
+      descricaoDetalhadaProduto:
+        type: string
+        description: Descrição detalhada do produto
+      prazoEntrega:
+        type: integer
+        description: Prazo de entrega do item em dias
+      codigoCompradorItemRc:
+        type: string
+        description: Código do comprador associado ao item da requisição
+      tipoContratoCatalogo:
+        type: integer
+        description: Tipo de contrato ou catálogo aplicado ao item
+    description: Objeto que representa um item do pedido
+  Pedido:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: Identificador único do pedido
+      dataPedidoDisponivel:
+        type: string
+        description: Data em que o pedido ficou disponível para processamento
+      dataIntegracao:
+        type: string
+        description: Data em que o pedido foi integrado ao sistema
+      codigoCondicaoPagamento:
+        type: string
+        description: Código da condição de pagamento aplicada ao pedido
+      incoterms:
+        type: string
+        description: Incoterms utilizado na negociação do pedido
+      textoCabecalho:
+        type: string
+        description: Texto informativo exibido no cabeçalho do pedido
+      idFornecedorIntegracao:
+        type: string
+        description: Identificador do fornecedor no sistema de integração
+      cnpjFornecedor:
+        type: string
+        description: CNPJ do fornecedor
+      cnpjComprador:
+        type: string
+        description: CNPJ da empresa compradora
+      nomeUsuarioComprador:
+        type: string
+        description: Nome do usuário responsável pela compra
+      itens:
+        type: array
+        description: Lista de itens que compõem o pedido
+        items:
+          $ref: '#/definitions/Pedido_Item'
+    x-examples:
+      Example 1:
+        id: 22887
+        dataPedidoDisponivel: '2026-02-11T09:48:41'
+        dataIntegracao: '2026-02-11T09:48:41'
+        codigoCondicaoPagamento: 30DDL
+        incoterms: Cif
+        textoCabecalho: Pedido Plataforma Smarkets
+        idFornecedorIntegracao: '4041'
+        cnpjFornecedor: 67.994.897/0001-97
+        cnpjComprador: 21.003.099/0001-55
+        nomeUsuarioComprador: André Gotler | Smarkets
+        itens:
+          - id: 40426
+            codigoProduto: '900000636'
+            nomeProduto: Mouse Wireless WM126 Preto - Dell (129621684)
+            quantidade: 1
+            precoBruto: 10
+            precoLiquido: 10
+            precoUnidade: 10
+            codigoCategoria: 'PERIFÉRICOS '
+            codigoNcm: '84716053'
+            codigoRc: '60810001'
+            codigoUnidadeMedida: ''
+            idProdutoIntegracao: ''
+            centroCustoIntegracao: ''
+            descricaoSolicitacaoCompra: ''
+            descricaoDetalhadaProduto: ''
+            prazoEntrega: 100
+            codigoCompradorItemRc: '12345'
+            tipoContratoCatalogo: 2
+  body_put_pedido_item:
+    type: object
+    required:
+      - IdPedidoItem
+    properties:
+      IdPedido:
+        type: integer
+        description: "Código do pedido no Marketplace\r\n"
+      IdPedidoItem:
+        type: integer
+        description: Código do item no pedido
+      Quantidade:
+        type: number
+        description: Quantidade do item
+      PrecoBruto:
+        type: integer
+        description: Preço bruto do item
+      PrecoLiquido:
+        type: integer
+        description: Preço líquido do item
+      PrecoUnidade:
+        type: integer
+        description: Preço unitário do item
+  body_put_pedido:
+    type: object
+    required:
+      - IdPedido
+      - Status
+    properties:
+      IdPedido:
+        type: integer
+        description: Código do pedido no Marketplace
+      Status:
+        type: string
+        description: >-
+          Situação atual do pedido no Marketplace (ex. Aguardando aprovação
+          interna)
+      Itens:
+        type: array
+        items:
+          $ref: '#/definitions/body_put_pedido_item'
+    x-examples:
+      Example 1:
+        IdPedido: 22885
+        Status: Aguardando aprovação interna
+        Itens:
+          - IdPedido: 22885
+            IdPedidoItem: 40424
+            Quantidade: 10.5
+            PrecoBruto: 100
+            PrecoLiquido: 90
+            PrecoUnidade: 9
+  result-pedido-put:
+    type: object
+    properties:
+      IdPedido:
+        type: string
+      mensagem:
+        type: string
+      statusCode:
+        type: string
+    x-examples:
+      Example 1:
+        IdPedido: '22885'
+        mensagem: '"Sucesso"'
+        statusCode: '200'
+  Item_Pedido_Pendente_Integracao:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: Identificador único do item do pedido
+      codigo:
+        type: string
+        description: Código identificador do item
+      codigoProduto:
+        type: string
+        description: Código do produto
+      nomeProduto:
+        type: string
+        description: Nome do produto
+      quantidade:
+        type: integer
+        description: Quantidade solicitada do produto
+      dataRemessa:
+        type: string
+        description: Data prevista para remessa do item
+      precoBruto:
+        type: integer
+        description: Valor bruto do item
+      precoLiquido:
+        type: integer
+        description: Valor líquido do item após descontos
+      precoUnidade:
+        type: integer
+        description: Preço unitário do produto
+      codigoCategoria:
+        type: string
+        description: Código da categoria do produto
+      codigoNcm:
+        type: string
+        description: Código NCM do produto
+      codigoRc:
+        type: string
+        description: Código da requisição de compra
+      codigoIva:
+        type: string
+        description: Código de IVA aplicado ao item
+      codigoUnidadeMedida:
+        type: string
+        description: Código da unidade de medida do produto
+      idProdutoIntegracao:
+        type: string
+        description: Identificador do produto no sistema de integração
+      centroCustoIntegracao:
+        type: string
+        description: Centro de custo associado ao item
+      descricaoSolicitacaoCompra:
+        type: string
+        description: Descrição da solicitação de compra
+      descricaoDetalhadaProduto:
+        type: string
+        description: Descrição detalhada do produto
+      codigoCompradorItemRc:
+        type: string
+        description: Código do comprador vinculado ao item da requisição
+  Pedido_Pendente_Integracao:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: Identificador único do pedido
+      dataIntegracao:
+        type: string
+        description: Data em que o pedido foi integrado ao sistema
+      tipoPedido:
+        type: string
+        description: Tipo do pedido realizado
+      codigoGrupoComprador:
+        type: string
+        description: Código do grupo comprador
+      codigoOrganizacaoCompras:
+        type: string
+        description: Código da organização de compras
+      codigoCondicaoPagamento:
+        type: string
+        description: Código da condição de pagamento utilizada
+      incoterms:
+        type: string
+        description: Incoterms aplicável ao pedido
+      textoCabecalho:
+        type: string
+        description: Texto descritivo do cabeçalho do pedido
+      idFornecedorIntegracao:
+        type: string
+        description: Identificador do fornecedor no sistema de integração
+      cnpjFornecedor:
+        type: string
+        description: CNPJ do fornecedor
+      cnpjComprador:
+        type: string
+        description: CNPJ do comprador
+      nomeUsuarioComprador:
+        type: string
+        description: Nome do usuário responsável pela comprador
+      itens:
+        type: array
+        items:
+          $ref: '#/definitions/Item_Pedido_Pendente_Integracao'
+  result_pedido:
+    type: object
+    properties:
+      result:
+        type: array
+        items:
+          $ref: '#/definitions/Pedido_Pendente_Integracao'
+    x-examples:
+      Example 1:
+        result:
+          - id: 38
+            dataPedidoDisponivel: '2026-01-20T14:12:12'
+            dataIntegracao: '2026-01-20T14:12:12'
+            tipoPedido: '123'
+            codigoGrupoComprador: GRP
+            codigoOrganizacaoCompras: ORG
+            codigoCondicaoPagamento: 45DDL
+            incoterms: Cif
+            textoCabecalho: Pedido Plataforma Smarkets
+            idFornecedorIntegracao: '3333'
+            cnpjFornecedor: 65.112.314/0001-21
+            cnpjComprador: 21.003.099/0001-55
+            nomeUsuarioComprador: Rafael Gino
+            itens:
+              - id: 97
+                codigo: ''
+                codigoProduto: SUPSAP
+                nomeProduto: Suporte SAP
+                quantidade: 1
+                dataRemessa: '2019-12-01T00:00:00'
+                precoBruto: 123
+                precoLiquido: 123
+                precoUnidade: 123
+                codigoCategoria: SUP
+                codigoNcm: '90189099'
+                codigoRc: T10
+                codigoIva: IVA
+                codigoUnidadeMedida: '316'
+                idProdutoIntegracao: SUPSAP
+                centroCustoIntegracao: '5678'
+                descricaoSolicitacaoCompra: TESTE
+                descricaoDetalhadaProduto: ''
+                codigoCompradorItemRc: MEC
+          - id: 219
+            dataPedidoDisponivel: '2026-01-20T14:12:12'
+            dataIntegracao: '2026-01-20T14:12:12'
+            tipoPedido: '123'
+            codigoGrupoComprador: GRP
+            codigoOrganizacaoCompras: ORG
+            codigoCondicaoPagamento: 45DDL
+            incoterms: Cif
+            textoCabecalho: Pedido Plataforma Smarkets
+            idFornecedorIntegracao: ''
+            cnpjFornecedor: 08.156.392/0001-94
+            cnpjComprador: 21.003.099/0001-55
+            nomeUsuarioComprador: Henrique Soares de Santana
+            itens:
+              - id: 875
+                codigo: ''
+                codigoProduto: TLK120
+                nomeProduto: Teclado Logitech K120, ABNT2
+                quantidade: 1
+                dataRemessa: '2020-01-30T00:00:00'
+                precoBruto: 25
+                precoLiquido: 25
+                precoUnidade: 25
+                codigoCategoria: PER
+                codigoNcm: 8467.91.00
+                codigoIva: IVA
+                codigoUnidadeMedida: '316'
+                idProdutoIntegracao: TLK120
+                centroCustoIntegracao: '5678'
+                descricaoSolicitacaoCompra: ''
+                descricaoDetalhadaProduto: Teclado Logitech K120, ABNT2
+          - id: 219
+            dataPedidoDisponivel: '2026-01-20T14:12:12'
+            dataIntegracao: '2026-01-20T14:12:12'
+            tipoPedido: '123'
+            codigoGrupoComprador: GRP
+            codigoOrganizacaoCompras: ORG
+            codigoCondicaoPagamento: 45DDL
+            incoterms: Cif
+            textoCabecalho: Pedido Plataforma Smarkets
+            idFornecedorIntegracao: ''
+            cnpjFornecedor: 08.156.392/0001-94
+            cnpjComprador: 21.003.099/0001-55
+            nomeUsuarioComprador: Henrique Soares de Santana
+            itens:
+              - id: 875
+                codigo: ''
+                codigoProduto: TLK120
+                nomeProduto: Teclado Logitech K120, ABNT2
+                quantidade: 1
+                dataRemessa: '2020-01-30T00:00:00'
+                precoBruto: 25
+                precoLiquido: 25
+                precoUnidade: 25
+                codigoCategoria: PER
+                codigoNcm: 8467.91.00
+                codigoIva: IVA
+                codigoUnidadeMedida: '316'
+                idProdutoIntegracao: TLK120
+                centroCustoIntegracao: '5678'
+                descricaoSolicitacaoCompra: ''
+                descricaoDetalhadaProduto: Teclado Logitech K120, ABNT2
+  body_cancelar_pedido:
+    type: object
+    required:
+      - IdIntegracaoPedidoERP
+    properties:
+      IdIntegracaoPedidoERP:
+        type: string
+        x-stoplight:
+          id: k944z9gkewgp4
+    x-examples:
+      Exemplo de request: 4300000063
+  result_cancelar_pedido:
+    type: object
+    properties:
+      IdIntegracaoPedidoERP:
+        type: string
+      mensagem:
+        type: string
+      statusCode:
+        type: string
+    x-examples:
+      Example 1:
+        IdIntegracaoPedidoERP: '4300000063'
+        mensagem: '"Sucesso"'
+        statusCode: '200'
+  body_autenticacao:
+    type: object
+    required:
+      - idTenant
+      - identificador
+      - senha
+    properties:
+      identificador:
+        type: string
+        example: email@email.com.br
+        description: "Email do Usuário\r\n"
+      senha:
+        type: string
+        example: '123456'
+        description: Senha de acesso ao sistema
+      idTenant:
+        type: integer
+        example: 1
+        description: Identificador do Tenant da empresa que deseja logar
+  result_autenticacao:
+    type: object
+    properties:
+      accessToken:
+        type: string
+        example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+  Categoria_Produto_1:
+    type: object
+    properties:
+      idCategoriaProduto:
+        type: integer
+        description: Identificador da categoria do produto
+      codigo:
+        type: string
+        description: Código da categoria
+      nome:
+        type: string
+        description: Nome da categoria
+      ativa:
+        type: boolean
+        description: Indica se a categoria está ativa
+      regulamentacao:
+        type: boolean
+        description: Indica se a categoria possui regulamentação específica
+      classificacao:
+        type: integer
+        description: Classificação da categoria
+    description: Informações da categoria do produto
+  Unidade_Medida_1:
+    type: object
+    properties:
+      idUnidadeMedida:
+        type: integer
+        description: Identificador da unidade de medida
+      codigo:
+        type: string
+        description: Código da unidade de medida
+      descricao:
+        type: string
+        description: Descrição da unidade de medida
+      sigla:
+        type: string
+        description: Sigla da unidade de medida
+      permiteQuantidadeFracionada:
+        type: boolean
+        description: Indica se permite quantidade fracionada
+    description: Informações da unidade de medida
+  Marcas_1:
+    type: object
+    properties:
+      idMarca:
+        type: integer
+        description: Identificador da marca
+      codigo:
+        type: string
+        description: Código da marca
+      nome:
+        type: string
+        description: Nome da marca
+    description: Informações da marca
+  Produtos:
+    type: object
+    properties:
+      idProduto:
+        type: integer
+        description: Identificador único do produto
+      idCategoriaProduto:
+        type: integer
+        description: Identificador da categoria do produto
+      categoria:
+        $ref: '#/definitions/Categoria_Produto_1'
+      idUnidadeMedida:
+        type: integer
+        description: Identificador da unidade de medida do produto
+      unidadeMedida:
+        $ref: '#/definitions/Unidade_Medida_1'
+      situacao:
+        type: string
+        description: Situação atual do produto
+      tipo:
+        type: string
+        description: Tipo do produto
+      codigo:
+        type: string
+        description: Código identificador do produto
+      codigoNcm:
+        type: string
+        description: Código NCM do produto
+      descricao:
+        type: string
+        description: Descrição resumida do produto
+      descricaoDetalhada:
+        type: string
+        description: Descrição detalhada do produto
+      moeda:
+        $ref: '#/definitions/Moeda'
+      idSolicitante:
+        type: integer
+        description: Identificador do solicitante do produto
+      marcas:
+        type: array
+        description: Lista de marcas associadas ao produto
+        items:
+          $ref: '#/definitions/Marcas_1'
+      contasContabeis:
+        type: array
+        description: Lista de contas contábeis associadas ao produto
+        items:
+          type: object
+          description: Informações da conta contábil
+          properties: {}
+      codigoUnico:
+        type: integer
+        description: Código único de identificação do produto
+    description: Objeto que representa um produto
+  result_get_produtos:
+    type: object
+    properties:
+      numeroPaginas:
+        type: integer
+        description: Quantidade total de páginas do resultado
+      itens:
+        type: array
+        description: Lista de itens retornados na consulta
+        items:
+          $ref: '#/definitions/Produtos'
+      total:
+        type: integer
+        description: Quantidade total de registros encontrados
+    x-examples:
+      Example 1:
+        numeroPaginas: 5634
+        itens:
+          - idProduto: 172534
+            idCategoriaProduto: 285
+            categoria:
+              idCategoriaProduto: 285
+              codigo: ''
+              nome: EPI - EQUIPAMENTOS DE PROTEÇÃO INDIVIDUAL
+              ativa: true
+              regulamentacao: false
+              classificacao: 1
+            idUnidadeMedida: 1635
+            unidadeMedida:
+              idUnidadeMedida: 1635
+              codigo: '21'
+              descricao: PEÇA
+              sigla: PÇ
+              permiteQuantidadeFracionada: false
+            situacao: Ativo
+            tipo: Produto
+            codigo: '10653'
+            codigoNcm: '12345678'
+            descricao: Blusão Vaqueta CZ Velcro Tam G Procipa CA 30561
+            descricaoDetalhada: '**.'
+            moeda: BRL
+            idSolicitante: 20628
+            marcas:
+              - idMarca: 3282
+                codigo: ''
+                nome: 'PARAIBUNA           '
+            contasContabeis: []
+            codigoUnico: 950027943
+          - idProduto: 172533
+            idCategoriaProduto: 285
+            categoria:
+              idCategoriaProduto: 285
+              codigo: ''
+              nome: EPI - EQUIPAMENTOS DE PROTEÇÃO INDIVIDUAL
+              ativa: true
+              regulamentacao: false
+              classificacao: 1
+            idUnidadeMedida: 1635
+            unidadeMedida:
+              idUnidadeMedida: 1635
+              codigo: '21'
+              descricao: PEÇA
+              sigla: PÇ
+              permiteQuantidadeFracionada: false
+            situacao: Ativo
+            tipo: Produto
+            descricao: Blusão Trev Amarelo com Capuz e Forro Tamanho M Brascamp CA 28438
+            descricaoDetalhada: '**BLUSÃO TREV AM C/CAPUZ C/FORRO C/BOT TAM .'
+            moeda: BRL
+            idSolicitante: 20628
+            marcas: []
+            contasContabeis: []
+            codigoUnico: 950027942
+          - idProduto: 172532
+            idCategoriaProduto: 285
+            categoria:
+              idCategoriaProduto: 285
+              codigo: ''
+              nome: EPI - EQUIPAMENTOS DE PROTEÇÃO INDIVIDUAL
+              ativa: true
+              regulamentacao: false
+              classificacao: 1
+            idUnidadeMedida: 1635
+            unidadeMedida:
+              idUnidadeMedida: 1635
+              codigo: '21'
+              descricao: PEÇA
+              sigla: PÇ
+              permiteQuantidadeFracionada: false
+            situacao: Ativo
+            tipo: Produto
+            descricao: Blusão Trev Amarelo com Capuz e Forro GG Brascamp
+            descricaoDetalhada: >-
+              **BLUSÃO TREV AM C/CAPUZ C/FORRO C/BOT TAM GG S/LOGOTIPO 127
+              BRASCAMP CA 28438**
+
+
+              **Descrição Geral:**
+
+
+              Blusão de segurança de alta visibilidade...
+            moeda: BRL
+            idSolicitante: 20628
+            marcas: []
+            contasContabeis: []
+            codigoUnico: 950027941
+          - idProduto: 172531
+            idCategoriaProduto: 285
+            categoria:
+              idCategoriaProduto: 285
+              codigo: ''
+              nome: EPI - EQUIPAMENTOS DE PROTEÇÃO INDIVIDUAL
+              ativa: true
+              regulamentacao: false
+              classificacao: 1
+            idUnidadeMedida: 1635
+            unidadeMedida:
+              idUnidadeMedida: 1635
+              codigo: '21'
+              descricao: PEÇA
+              sigla: PÇ
+              permiteQuantidadeFracionada: false
+            situacao: Ativo
+            tipo: Produto
+            descricao: >-
+              Blusão Trev Amarelo com Capuz e Forro Tamanho G sem Logotipo
+              Brascamp
+            descricaoDetalhada: >-
+              **BLUSÃO TREV AM C/CAPUZ C/FORRO C/BOT TAM G S/LOGOTIPO 126
+              BRASCAMP CA 28438**
+            moeda: BRL
+            idSolicitante: 20628
+            marcas: []
+            contasContabeis: []
+            codigoUnico: 950027940
+          - idProduto: 172530
+            idCategoriaProduto: 285
+            categoria:
+              idCategoriaProduto: 285
+              codigo: ''
+              nome: EPI - EQUIPAMENTOS DE PROTEÇÃO INDIVIDUAL
+              ativa: true
+              regulamentacao: false
+              classificacao: 1
+            idUnidadeMedida: 1635
+            unidadeMedida:
+              idUnidadeMedida: 1635
+              codigo: '21'
+              descricao: PEÇA
+              sigla: PÇ
+              permiteQuantidadeFracionada: false
+            situacao: Ativo
+            tipo: Produto
+            descricao: Blusão Raspa Nat Velcro Tam G BVR5602 Procipa CA 36980
+            descricaoDetalhada: >-
+              **BLUSÃO DE RASPA NATURAL COM VELCRO TAMANHO G BVR5602 PROCIPA CA
+              36980**
+            moeda: BRL
+            idSolicitante: 20628
+            marcas: []
+            contasContabeis: []
+            codigoUnico: 950027939
+        total: 28169
+  body_put_produto:
+    type: object
+    required:
+      - idProduto
+    properties:
+      idProduto:
+        type: integer
+        description: Identificador único do produto no sistema
+      codigoCategoriaProduto:
+        type: integer
+        description: Código da categoria do produto
+      codigoUnidadeMedida:
+        type: integer
+        description: Código da unidade de medida utilizada pelo produto
+      tipo:
+        $ref: '#/definitions/TipoProduto'
+      codigo:
+        type: string
+        description: Código identificador do produto
+      codigoNcm:
+        type: string
+        description: Código NCM (Nomenclatura Comum do Mercosul) do produto
+      descricao:
+        type: string
+        description: Descrição resumida do produto
+      descricaoDetalhada:
+        type: string
+        description: Descrição detalhada e completa do produto
+      consumoMedio:
+        type: integer
+        description: Consumo médio estimado do produto
+      moeda:
+        $ref: '#/definitions/Moeda'
+      valorReferencia:
+        type: integer
+        description: Valor de referência do produto na moeda informada
+      marcas:
+        type: array
+        description: Lista de códigos ou identificadores de marcas associadas ao produto
+        items:
+          type: string
+      contasContabeis:
+        type: array
+        description: Lista de códigos de contas contábeis vinculadas ao produto
+        items:
+          type: string
+    x-examples:
+      Example 1:
+        idProduto: 0
+        codigoCategoriaProduto: 0
+        codigoUnidadeMedida: 0
+        tipo: Produto
+        codigo: string
+        codigoNcm: string
+        descricao: string
+        descricaoDetalhada: string
+        consumoMedio: 0
+        moeda: Real
+        valorReferencia: 0
+        marcas:
+          - string
+        contasContabeis:
+          - string
+  result_put_produto:
+    type: object
+    properties:
+      mensagem:
+        type: string
+      statusCode:
+        type: string
+    x-examples:
+      Example 1:
+        mensagem: string
+        statusCode: string
+  body_post_produto:
+    type: object
+    required:
+      - codigoCategoriaProduto
+      - codigoUnidadeMedida
+      - descricao
+      - moeda
+      - tipo
+    properties:
+      idProduto:
+        type: integer
+        description: Identificador único do produto no sistema
+      codigoCategoriaProduto:
+        type: integer
+        description: Código da categoria do produto
+      codigoUnidadeMedida:
+        type: integer
+        description: Código da unidade de medida utilizada pelo produto
+      tipo:
+        $ref: '#/definitions/TipoProduto'
+      codigo:
+        type: string
+        description: Código identificador do produto
+      codigoNcm:
+        type: string
+        description: Código NCM (Nomenclatura Comum do Mercosul) do produto
+      descricao:
+        type: string
+        description: Descrição resumida do produto
+      descricaoDetalhada:
+        type: string
+        description: Descrição detalhada e completa do produto
+      consumoMedio:
+        type: integer
+        description: Consumo médio estimado do produto
+      moeda:
+        $ref: '#/definitions/Moeda'
+      valorReferencia:
+        type: integer
+        description: Valor de referência do produto na moeda informada
+      marcas:
+        type: array
+        description: Lista de códigos ou identificadores de marcas associadas ao produto
+        items:
+          type: string
+      contasContabeis:
+        type: array
+        description: Lista de códigos de contas contábeis vinculadas ao produto
+        items:
+          type: string
+    x-examples:
+      Example 1:
+        idProduto: 0
+        codigoCategoriaProduto: 0
+        codigoUnidadeMedida: 0
+        tipo: Produto
+        codigo: string
+        codigoNcm: string
+        descricao: string
+        descricaoDetalhada: string
+        consumoMedio: 0
+        moeda: Real
+        valorReferencia: 0
+        marcas:
+          - string
+        contasContabeis:
+          - string
+  result_post_produto:
+    type: object
+    properties:
+      mensagem:
+        type: string
+      statusCode:
+        type: string
+        x-stoplight:
+          id: uscyu2yo0s4ij
+    x-examples:
+      Example 1:
+        sucesso: ''
+  Categoria_Produto:
+    type: object
+    properties:
+      idCategoriaProduto:
+        type: integer
+        description: Identificador único da categoria
+      codigo:
+        type: string
+        description: Código interno da categoria
+      nome:
+        type: string
+        description: Nome da categoria do produto
+      ativa:
+        type: boolean
+        description: Indica se a categoria está ativa
+      regulamentacao:
+        type: boolean
+        description: Indica se a categoria possui regulamentação específica
+      classificacao:
+        type: integer
+        description: Classificação numérica da categoria
+    description: Informações da categoria do produto
+  Unidade_Medida:
+    type: object
+    properties:
+      idUnidadeMedida:
+        type: integer
+        description: Identificador único da unidade de medida
+      codigo:
+        type: string
+        description: Código interno da unidade de medida
+      descricao:
+        type: string
+        description: Descrição completa da unidade de medida
+      sigla:
+        type: string
+        description: Sigla da unidade de medida
+      permiteQuantidadeFracionada:
+        type: boolean
+        description: Indica se a unidade permite quantidade fracionada
+    description: Dados da unidade de medida utilizada pelo produto
+  Marcas:
+    type: object
+    properties:
+      idMarca:
+        type: integer
+        description: Identificador único da marca
+      codigo:
+        type: string
+        description: Código da marca
+      nome:
+        type: string
+        description: Nome da marca
+  result_get_produto:
+    type: object
+    properties:
+      idProduto:
+        type: integer
+        description: Identificador único do produto no sistema
+      idCategoriaProduto:
+        type: integer
+        description: Identificador da categoria associada ao produto
+      categoria:
+        $ref: '#/definitions/Categoria_Produto'
+      idUnidadeMedida:
+        type: integer
+        description: Identificador da unidade de medida do produto
+      unidadeMedida:
+        $ref: '#/definitions/Unidade_Medida'
+      situacao:
+        type: string
+        description: Situação atual do produto
+      tipo:
+        type: string
+        description: Tipo do produto conforme regra de negócio
+      codigo:
+        type: string
+        description: Código identificador do produto
+      codigoNcm:
+        type: string
+        description: Código NCM (Nomenclatura Comum do Mercosul) do produto
+      descricao:
+        type: string
+        description: Descrição resumida do produto
+      descricaoDetalhada:
+        type: string
+        description: Descrição detalhada e completa do produto
+      moeda:
+        $ref: '#/definitions/Moeda'
+      idSolicitante:
+        type: integer
+        description: Identificador do solicitante responsável pelo produto
+      marcas:
+        type: array
+        description: Lista de marcas associadas ao produto
+        items:
+          $ref: '#/definitions/Marcas'
+      contasContabeis:
+        type: array
+        description: Lista de contas contábeis vinculadas ao produto
+        items:
+          type: object
+          properties: {}
+      codigoUnico:
+        type: integer
+        description: Código único utilizado para identificação interna do produto
+    x-examples:
+      Example 1:
+        idProduto: 172534
+        idCategoriaProduto: 285
+        categoria:
+          idCategoriaProduto: 285
+          codigo: ''
+          nome: EPI - EQUIPAMENTOS DE PROTEÇÃO INDIVIDUAL
+          ativa: true
+          regulamentacao: false
+          classificacao: 1
+        idUnidadeMedida: 1635
+        unidadeMedida:
+          idUnidadeMedida: 1635
+          codigo: '21'
+          descricao: PEÇA
+          sigla: PÇ
+          permiteQuantidadeFracionada: false
+        situacao: Ativo
+        tipo: Produto
+        codigo: '10653'
+        codigoNcm: '12345678'
+        descricao: Blusão Vaqueta CZ Velcro Tam G Procipa CA 30561
+        descricaoDetalhada: >-
+          **BLUSÃO DE VAQUETA CZ VELCRO TAM G 43 BV5601 PROCIPA CA 30561**
+
+
+          **Descrição Geral:**
+
+
+          O blusão de vaqueta CZ Velcro da Procipa, tamanho G (43), modelo
+          BV5601, com Certificado de Aprovação (CA) número 30561, é um
+          Equipamento de Proteção Individual (EPI) projetado para proteger o
+          tronco do usuário contra agentes abrasivos, escoriantes, cortantes e
+          perfurantes. Fabricado em couro vaqueta de alta qualidade, oferece
+          durabilidade e resistência em ambientes de trabalho exigentes.
+
+
+          **Características Técnicas:**
+
+
+          *   **Material:** Couro vaqueta curtido ao cromo, selecionado para
+          garantir resistência e flexibilidade.
+
+          *   **Tamanho:** G (43).
+
+          *   **Fechamento:** Frontal com zíper e velcro, proporcionando ajuste
+          seguro e facilidade ao vestir e despir.
+
+          *   **Costura:** Reforçada com linha de alta tenacidade, aumentando a
+          vida útil do blusão.
+
+          *   **Acabamento:** Bordas com acabamento para evitar desfiados e
+          aumentar o conforto.
+
+          *   **Design:** Anatômico, permitindo maior liberdade de movimento.
+
+          *   **Cor:** Cor padrão do couro vaqueta (variações de tonalidade são
+          inerentes ao material).
+
+
+          **Proteção:**
+
+
+          *   Proteção do tronco contra agentes abrasivos, escoriantes,
+          cortantes e perfurantes.
+
+          *   Resistência ao calor de contato (pequenas chamas, calor radiante e
+          respingos de solda, em algumas aplicações específicas, dependendo da
+          espessura e tratamento do couro).
+
+
+          **Aplicabilidade:**
+
+
+          *   Indústria metalúrgica.
+
+          *   Indústria automobilística.
+
+          *   Construção civil.
+
+          *   Soldagem (proteção contra respingos).
+
+          *   Manutenção industrial.
+
+          *   Atividades que envolvam riscos de abrasão, cortes e perfurações no
+          tronco.
+
+          *   Trabalhos com esmerilhadeira, lixadeira e outras ferramentas
+          abrasivas.
+
+
+          **Contraindicações/Restrições:**
+
+
+          *   Não utilizar em ambientes com exposição a agentes químicos
+          agressivos, como ácidos fortes e solventes, que podem danificar o
+          couro.
+
+          *   Não utilizar em situações que envolvam risco de choque elétrico.
+
+          *   Não utilizar em ambientes com temperaturas extremas, que podem
+          comprometer a integridade do couro.
+
+          *   Não recomendado para proteção contra riscos térmicos elevados
+          (fogo intenso ou calor extremo).
+
+          *   Verificar a integridade do blusão antes de cada uso. Em caso de
+          danos, substituir imediatamente.
+
+          *   O blusão deve ser utilizado no tamanho adequado para garantir a
+          proteção e o conforto do usuário.
+
+
+          **Certificações:**
+
+
+          *   Certificado de Aprovação (CA) número 30561, emitido pelo
+          Ministério do Trabalho e Emprego (MTE), atestando a conformidade do
+          produto com as normas de segurança aplicáveis.
+        moeda: BRL
+        idSolicitante: 20628
+        marcas:
+          - idMarca: 3282
+            codigo: ''
+            nome: 'PARAIBUNA           '
+        contasContabeis: []
+        codigoUnico: 950027943
+  Item_Solicitacao_Compra:
+    type: object
+    required:
+      - codigoCategoria
+      - codigoCompradorErp
+      - codigoFilialEmpresa
+      - codigoItemRc
+      - codigoRc
+      - descricaoUnidadeMedida
+      - moeda
+      - nomeCategoria
+      - quantidade
+      - quantidadeUnidadesPreco
+      - siglaUnidadeMedida
+      - valorReferencia
+    properties:
+      codigoItemRc:
+        type: string
+        description: Código identificador do item da requisição de compra
+      codigoRc:
+        type: string
+        description: Código da requisição de compra associada ao item
+      descricaoItemRc:
+        type: string
+        description: >-
+          Descrição do item da requisição de compra (Obrigatório caso Codigo
+          Produto vazio ou nulo)
+      codigoCompradorErp:
+        type: string
+        description: Código do comprador no sistema ERP
+      codigoContrato:
+        type: integer
+        description: Código do contrato associado ao item da requisição
+      infoRequisitante:
+        type: string
+        description: Informações adicionais sobre o requisitante
+      nomeProduto:
+        type: string
+        description: >-
+          Nome do produto solicitado (Obrigatório caso Codigo Produto vazio ou
+          nulo)
+      descricaoProduto:
+        type: string
+        description: >-
+          Descrição detalhada do produto solicitado (Obrigatório caso Codigo
+          Produto vazio ou nulo)
+      codigoProduto:
+        type: string
+        description: Código do produto no sistema de origem
+      tipoProduto:
+        type: string
+        description: >-
+          Tipo do produto conforme classificação de negócio (Produto, Serviço)
+          (Obrigatório caso CodigoProduto esteja preenchido)
+      utilizacaoProduto:
+        type: string
+        description: >-
+          Utilização ou finalidade do produto (consumo, revenda, ativo, etc. )
+          (Obrigatório caso CodigoProduto esteja preenchido)
+      codigoOrigemProduto:
+        type: string
+        description: >-
+          Código que identifica a origem do produto (Obrigatório caso
+          CodigoProduto esteja preenchido)
+      ncm:
+        type: string
+        description: >-
+          Código NCM do produto (Obrigatório caso CodigoProduto esteja
+          preenchido)
+      codigoFilialEmpresa:
+        type: string
+        description: Código da filial da empresa solicitante
+      codigoEmpresa:
+        type: string
+        description: Código da empresa solicitante
+      codigoDeposito:
+        type: string
+        description: Código do depósito ou almoxarifado
+      codigoCategoria:
+        type: string
+        description: Código da categoria do produto
+      nomeCategoria:
+        type: string
+        description: Nome da categoria do produto
+      quantidade:
+        type: integer
+        description: Quantidade solicitada do produto
+      siglaUnidadeMedida:
+        type: string
+        description: Sigla da unidade de medida do produto
+      descricaoUnidadeMedida:
+        type: string
+        description: Descrição da unidade de medida do produto
+      dataRemessa:
+        type: string
+        description: Data prevista para remessa ou entrega do item
+      valorReferencia:
+        type: integer
+        description: Valor de referência do item
+      quantidadeUnidadesPreco:
+        type: integer
+        description: Quantidade de unidades considerada para cálculo de preço
+      tipoItem:
+        type: string
+        description: Tipo do item da requisição (material, serviço, ativo, etc.)
+      codigoClassificacaoContabil:
+        type: string
+        description: Código de classificação contábil do item
+      fornecedorFixo:
+        type: string
+        description: Indica o fornecedor fixo definido para o item
+      fornecedorPretendido:
+        type: string
+        description: Fornecedor pretendido para atendimento do item
+      moeda:
+        type: string
+        description: Moeda utilizada para valores do item ()
+      previsaoEntregaDias:
+        type: integer
+        description: Previsão de entrega em dias
+      codigoContaContabil:
+        type: string
+        description: Código da conta contábil associada ao item
+      nomeContaContabil:
+        type: string
+        description: Nome da conta contábil associada ao item
+      codigoCentroCusto:
+        type: string
+        description: Código do centro de custo associado ao item
+      centroCusto:
+        type: string
+        description: Nome ou descrição do centro de custo
+      codigoImobilizado:
+        type: string
+        description: >-
+          Código do bem imobilizado associado ao item (Obrigatório quando
+          CodigoClassificacaoContabil == "A")
+      subNumeroImobilizado:
+        type: string
+        description: Subnúmero identificador do bem imobilizado
+      nomeImobilizado:
+        type: string
+        description: >-
+          Nome ou descrição do bem imobilizado (Obrigatório quando
+          CodigoClassificacaoContabil == "A")
+      ordem:
+        type: string
+        description: >-
+          Ordem interna ou número de ordem associada ao item (Obrigatório quando
+          CodigoClassificacaoContabil == "F")
+      elementoPep:
+        type: string
+        description: >-
+          Código do elemento PEP (Projeto/Estrutura de Projeto) (Obrigatório
+          quando CodigoClassificacaoContabil == "P" ou “N”)
+      diagramaRede:
+        type: string
+        description: Código do diagrama de rede associado ao item
+      pedidoEliminado:
+        type: string
+        description: Indica se o pedido relacionado ao item foi eliminado
+      categoriaDemanda:
+        type: string
+        description: Categoria da demanda do item
+      status:
+        type: string
+        description: Status atual do item da requisição
+      sla:
+        type: string
+        description: SLA associado ao atendimento do item
+      nomeResponsavel:
+        type: string
+        description: Nome do responsável pelo acompanhamento do item
+  Solicitacao_Compra:
+    type: object
+    required:
+      - codigoRc
+      - dataCriacaoRc
+      - departamento
+      - descricaoRc
+      - emailRequisitante
+      - itens
+      - nomeRequisitante
+      - ramalRequisitante
+      - tipoDocumento
+      - userRequisitante
+    properties:
+      codigoRc:
+        type: string
+        description: Código identificador da requisição de compra
+      tipoDocumento:
+        type: string
+        description: Tipo de documento da requisição de compra
+      descricaoRc:
+        type: string
+        description: Descrição ou observação associada à requisição de compra
+      userRequisitante:
+        type: string
+        description: Usuário responsável pela criação da requisição de compra
+      nomeRequisitante:
+        type: string
+        description: Nome completo do requisitante
+      departamento:
+        type: string
+        description: Departamento do requisitante
+      emailRequisitante:
+        type: string
+        description: E-mail do requisitante
+      telefoneRequisitante:
+        type: string
+        description: Telefone de contato do requisitante
+      ramalRequisitante:
+        type: string
+        description: Ramal interno do requisitante
+      dataCriacaoRc:
+        type: string
+        description: Data de criação da requisição de compra
+      dataLiberacaoRc:
+        type: string
+        description: Data de liberação/aprovação da requisição de compra
+      valorRequisicao:
+        type: integer
+        description: Valor total da requisição de compra
+      itens:
+        type: array
+        description: Lista de itens associados à requisição de compra
+        items:
+          $ref: '#/definitions/Item_Solicitacao_Compra'
+    x-examples:
+      Example 1:
+        codigoRc: string
+        tipoDocumento: string
+        descricaoRc: string
+        userRequisitante: string
+        nomeRequisitante: string
+        departamento: string
+        emailRequisitante: string
+        telefoneRequisitante: string
+        ramalRequisitante: string
+        dataCriacaoRc: '2026-01-23T20:10:47.984Z'
+        dataLiberacaoRc: '2026-01-23T20:10:47.984Z'
+        valorRequisicao: 0
+        itens:
+          - codigoItemRc: string
+            codigoRc: string
+            descricaoItemRc: string
+            codigoCompradorErp: string
+            codigoContrato: 0
+            infoRequisitante: string
+            nomeProduto: string
+            descricaoProduto: string
+            codigoProduto: string
+            tipoProduto: string
+            utilizacaoProduto: string
+            codigoOrigemProduto: string
+            ncm: string
+            codigoFilialEmpresa: string
+            codigoEmpresa: string
+            codigoDeposito: string
+            codigoCategoria: string
+            nomeCategoria: string
+            quantidade: 0
+            siglaUnidadeMedida: string
+            descricaoUnidadeMedida: string
+            dataRemessa: '2026-01-23T20:10:47.984Z'
+            valorReferencia: 0
+            quantidadeUnidadesPreco: 0
+            tipoItem: string
+            codigoClassificacaoContabil: string
+            fornecedorFixo: string
+            fornecedorPretendido: string
+            moeda: string
+            previsaoEntregaDias: 0
+            codigoContaContabil: string
+            nomeContaContabil: string
+            codigoCentroCusto: string
+            centroCusto: string
+            codigoImobilizado: string
+            subNumeroImobilizado: string
+            nomeImobilizado: string
+            ordem: string
+            elementoPep: string
+            diagramaRede: string
+            pedidoEliminado: string
+            categoriaDemanda: string
+            status: string
+            sla: string
+            nomeResponsavel: string
+  result_solicitacao_compra:
+    type: object
+    properties:
+      codigoRc:
+        type: string
+      mensagem:
+        type: string
+      statusCode:
+        type: string
+    x-examples:
+      Example 1:
+        codigoRc: string
+        mensagem: string
+        statusCode: string
+  body_pedido_pendente_cancelamento:
+    type: object
+    properties:
+      Pagina:
+        type: integer
+      ItensPorPagina:
+        type: integer
+    x-examples:
+      Example 1:
+        Pagina: 0
+        ItensPorPagina: 0
+  Itens_Pedidos_Pendente_Cancelamento:
+    type: object
+    properties:
+      idPedidoItem:
+        type: integer
+  Pedidos_Pendente_Cancelamento:
+    type: object
+    properties:
+      idPedido:
+        type: integer
+      itens:
+        type: array
+        items:
+          $ref: '#/definitions/Itens_Pedidos_Pendente_Cancelamento'
+  result_pedido_pendente_cancelamento:
+    type: object
+    properties:
+      numeroPaginas:
+        type: integer
+      itens:
+        type: array
+        items:
+          $ref: '#/definitions/Pedidos_Pendente_Cancelamento'
+      total:
+        type: integer
+    x-examples:
+      Example 1:
+        numeroPaginas: 1
+        itens:
+          - idPedido: 221
+            itens:
+              - idPedidoItem: 878
+          - idPedido: 643
+            itens:
+              - idPedidoItem: 2005
+        total: 2
+  result_pedidos_paginados:
+      type: array
+      description: Lista de pedidos
+      items:
+        $ref: '#/definitions/Pedido'
