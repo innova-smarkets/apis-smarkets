@@ -93,6 +93,66 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/result-pedido-put'
+  /pedidos-integracao/obtenha-pedidos:
+    get:
+      tags:
+        - Pedidos
+      summary: >-
+        Permite obter informações de todos os pedidos independente do status em um determinado range de datas (Max. 2 dias).
+      operationId: get-api-pedidos-integracao-obtenha-pedidos
+      parameters:
+        - name: pagina
+          in: query
+          description: Quantidade de páginas
+          required: false
+          type: string
+        - name: itensPorPagina
+          in: query
+          description: Quantidade de itens por página
+          required: false
+          type: string
+        - name: dataInicio
+          in: query
+          description: Data Inicial da Pesquisa (Padrão ISO 8601)
+          required: false
+          type: string
+        - name: dataFim
+          in: query
+          description: Data Final da Pesquisa (Padrão ISO 8601)
+          required: false
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/result_pedidos_paginados'
+  /pedidos-integracao/pedidoitens/entregues:
+    post:
+      tags:
+        - Pedidos
+      summary: >-
+        Permite informar o recebimento de itens.
+      operationId: post-api-pedidos-integracao-pedidoitens-entregues
+      parameters:
+        - x-examples:
+            Exemplo de request:
+            - idPedidoItem: 22885
+              quantidadeRecebida: 50
+              pedidoItemRecebimentoHistorico:
+                - IdPedido: 22885
+                  notaFiscal: "1234"
+                  dataRecebimento: "2026-04-22T03:00:00.000Z"
+          in: body
+          name: body
+          description: ''
+          required: false
+          schema:
+            $ref: '#/definitions/body_recebimento_itens'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/result_pedido_item_recebimento'
   /pedidos-integracao/pendentesintegracao:
     get:
       tags:
@@ -691,6 +751,15 @@ definitions:
       dataIntegracao:
         type: string
         description: Data em que o pedido foi integrado ao sistema
+      dataCriacao:
+        type: string
+        description: Data em que o pedido foi criado no sistema
+      dataAtualizacao:
+        type: string
+        description: Data em que o pedido foi atualizado no sistema pela última vez
+      situacao:
+        type: string
+        description: Situação em que o pedido se encontra.
       codigoCondicaoPagamento:
         type: string
         description: Código da condição de pagamento aplicada ao pedido
@@ -771,6 +840,20 @@ definitions:
       PrecoUnidade:
         type: integer
         description: Preço unitário do item
+  body_post_recebimento_item:
+    type: object
+    required:
+      - IdPedido
+    properties:
+      IdPedido:
+        type: integer
+        description: Identificador do pedido
+      NotaFiscal:
+        type: string
+        description: Número da nota fiscal
+      DataRecebimento:
+        type: string
+        description: Data de recebimento do item
   body_put_pedido:
     type: object
     required:
@@ -789,6 +872,33 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/body_put_pedido_item'
+    x-examples:
+      Example 1:
+        IdPedido: 22885
+        Status: Aguardando aprovação interna
+        Itens:
+          - IdPedido: 22885
+            IdPedidoItem: 40424
+            Quantidade: 10.5
+            PrecoBruto: 100
+            PrecoLiquido: 90
+            PrecoUnidade: 9
+  post_recebimento:
+    type: object
+    required:
+      - IdPedidoItem
+      - QuantidadeRecebida
+    properties:
+      IdPedidoItem:
+        type: integer
+        description: Identificador do item do pedido
+      QuantidadeRecebida:
+        type: integer
+        description: Quantidade que será recebida
+      Itens:
+        type: array
+        items:
+          $ref: '#/definitions/body_post_recebimento_item'
     x-examples:
       Example 1:
         IdPedido: 22885
@@ -2085,6 +2195,11 @@ definitions:
     description: Lista de pedidos
     items:
       $ref: '#/definitions/Pedido'
+  body_recebimento_itens:
+    type: array
+    description: Body de recebimento
+    items:
+      $ref: '#/definitions/post_recebimento'
   Pessoa_Fisica:
     type: object
     properties:
@@ -2161,6 +2276,46 @@ definitions:
         type: string
         description: Sigla da unidade de medida
     description: Unidade de medida do produto
+  result_pedido_item_recebimento:
+    type: array
+    description: result
+    items:
+      $ref: '#/definitions/pedido_item_recebimento'  
+  pedido_item_recebimento:
+    type: object
+    properties:
+      idPedidoItemRecebimento:
+        type: integer
+        description: Identificador do recebimento do pedido item
+      idPedidoItemRecebimentoHistorico:
+        type: integer
+        description: Identificador do histórico do recebimento
+      idPedidoItem:
+        type: integer
+        description: Identificador do pedido item
+      idTenant:
+        type: integer
+        description: Identificador do tenant
+      quantidadePedidoItem:
+        type: number
+        format: decimal
+        description: Quantidade total do pedido item
+      quantidadeSaldo:
+        type: number
+        format: decimal
+        description: Quantidade de saldo disponível
+      quantidadeRecebida:
+        type: number
+        format: decimal
+        description: Quantidade recebida
+      dataInclusao:
+        type: string
+        format: date-time
+        description: Data de inclusão do registro
+      quantidadeSaldoCancelado:
+        type: number
+        format: decimal
+        description: Quantidade de saldo cancelado
   Produto_Cotacao_Item:
     type: object
     properties:
